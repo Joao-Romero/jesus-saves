@@ -3,10 +3,14 @@ package org.academiadecodigo.hackathon.runner_bros.manager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import org.academiadecodigo.hackathon.runner_bros.gameobjects.RunnerType;
+
+import java.util.HashMap;
 
 /**
  * Created by cadet on 30/10/15.
@@ -23,6 +27,8 @@ public class AssetManager {
     public TextureAtlas.AtlasRegion sonic;
     public Animation sonicAnimation;
 
+    public HashMap<RunnerType,Sprite> runnerSprites;
+
     private AssetManager(){
         init();
     }
@@ -34,6 +40,12 @@ public class AssetManager {
         menuImage = new Image(new Texture(Gdx.files.internal("images/logo.png")));
 
         sonic = atlas.findRegion("sonic");
+       /*
+        runnerSprites = new HashMap();
+        for(RunnerType runnerType:RunnerType.values()){
+            runnerSprites.put(runnerType,new Sprite(atlas.findRegion(runnerType.toString())));
+        }
+        */
     }
 
     private Animation getAnimation(TextureAtlas.AtlasRegion atlasRegion, int columns, int rows, float fps) {

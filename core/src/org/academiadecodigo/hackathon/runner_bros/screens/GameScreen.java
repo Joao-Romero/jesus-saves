@@ -1,19 +1,31 @@
 package org.academiadecodigo.hackathon.runner_bros.screens;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import org.academiadecodigo.hackathon.runner_bros.Main;
-import org.academiadecodigo.hackathon.runner_bros.WorldController;
+import org.academiadecodigo.hackathon.runner_bros.stage.GameStage;
 
 /**
  * Created by cadet on 30/10/15.
  */
-public class GameScreen extends AbstractScreen {
+public class GameScreen implements Screen {
 
-    public GameScreen(Game game) {
-        super(game);
+    public GameStage getStage() {
+        return stage;
     }
+
+    private GameStage stage;
+
+    public GameScreen() {
+
+
+        stage = new GameStage();
+
+
+    }
+
+
 
     @Override
     public void show(){
@@ -23,6 +35,7 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public void render(float delta){
+        /*
         // set the world controller as input processor
         if(!(Gdx.input.getInputProcessor() instanceof WorldController)){
             Gdx.input.setInputProcessor(Main.worldController);
@@ -38,8 +51,39 @@ public class GameScreen extends AbstractScreen {
 
         // render game world to screen
         Main.worldRenderer.render();
+        */
+        //Clear the screen
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        //Update the stage
+        stage.draw();
+        stage.act(delta);
 
 
+    }
+
+    @Override
+    public void resize(int width, int height) {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void hide() {
+
+    }
+
+    @Override
+    public void dispose() {
 
     }
 }
