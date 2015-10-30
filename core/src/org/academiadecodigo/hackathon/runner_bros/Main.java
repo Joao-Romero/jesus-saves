@@ -3,6 +3,8 @@ package org.academiadecodigo.hackathon.runner_bros;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import org.academiadecodigo.hackathon.runner_bros.manager.GameManager;
+import org.academiadecodigo.hackathon.runner_bros.screens.GameScreen;
+import org.academiadecodigo.hackathon.runner_bros.screens.MenuScreen;
 
 /**
  * Created by cadet on 29/10/15.
@@ -11,21 +13,35 @@ public class Main extends Game{
 
     public static GameManager gameManager;
 
+    public static MenuScreen menuScreen;
+    public static GameScreen gameScreen;
 
-    public static int GAME_WIDTH;
-    public static int GAME_HEIGHT;
-    public static int SCREEN_WIDTH;
-    public static int SCREEN_HEIGHT;
-    public static int SCREEN_MARGIN = 10;
+    public static WorldController worldController;
+    public static WorldRenderer worldRenderer;
+
+    public static int gameWidth;
+    public static int gameHeight;
+    public static int screenWidth;
+    public static int screenHeight;
+    public final static int SCREEN_MARGIN = 10;
+
+
 
     @Override
     public void create() {
         gameManager = new GameManager();
-        SCREEN_WIDTH = Gdx.graphics.getWidth();
-        SCREEN_HEIGHT = Gdx.graphics.getHeight();
+        worldController = new WorldController();
+        worldRenderer = new WorldRenderer(worldController);
 
-        GAME_WIDTH = SCREEN_WIDTH * 2;
-        GAME_HEIGHT = SCREEN_HEIGHT;
+        screenWidth = Gdx.graphics.getWidth();
+        screenHeight = Gdx.graphics.getHeight();
+
+        gameWidth = screenWidth * 2;
+        gameHeight = screenHeight;
+
+        menuScreen = new MenuScreen(this);
+        gameScreen = new GameScreen(this);
+        setScreen(menuScreen);
 
     }
 }
