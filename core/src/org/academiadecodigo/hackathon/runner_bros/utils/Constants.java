@@ -14,7 +14,7 @@ public class Constants {
     private static final int VIEWPORT_WIDTH = 20;
     private static final int VIEWPORT_HEIGHT = 13;
 
-    public static final Vector2 WORLD_GRAVITY = new Vector2(0, -9);
+    public static final Vector2 WORLD_GRAVITY = new Vector2(0, -9.8f);
 
     public static final float GROUND_X = 0;
     public static final float GROUND_Y = 0;
@@ -34,10 +34,13 @@ public class Constants {
     public static final float RUNNER_HEIGHT = 2f;
 
     public static final float RUNNER_GRAVITY_SCALE = 3f;
-    public static float RUNNER_DENSITY = 0.5f;
-    public static final Vector2 RUNNER_JUMPING_LINEAR_IMPULSE = new Vector2(0, 4f);
+    public static float RUNNER_DENSITY = 1f;
+
+    public static final float RUNNER_MAX_VELOCITY = 20f;
+
+    public static final Vector2 RUNNER_JUMPING_LINEAR_IMPULSE = new Vector2(0, 10f);
     public static final Vector2 RUNNER_RUNNING_LINEAR_IMPULSE_LEFT = new Vector2(-0.3f, 0);
-    public static final Vector2 RUNNER_RUNNING_LINEAR_IMPULSE_RIGHT = new Vector2(0.3f, 0);
+    public static final Vector2 RUNNER_RUNNING_LINEAR_IMPULSE_RIGHT = new Vector2(3f, 0);
 
     public static final float RUNNER_DODGE_X = 2f;
     public static final float RUNNER_DODGE_Y = 1.5f;

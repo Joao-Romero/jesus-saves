@@ -15,6 +15,7 @@ import org.academiadecodigo.hackathon.runner_bros.box2d.MovingPlatform;
 import org.academiadecodigo.hackathon.runner_bros.gameobjects.Ground;
 import org.academiadecodigo.hackathon.runner_bros.gameobjects.Runner;
 import org.academiadecodigo.hackathon.runner_bros.gameobjects.Wall;
+import org.academiadecodigo.hackathon.runner_bros.manager.AssetManager;
 import org.academiadecodigo.hackathon.runner_bros.utils.BodyUtils;
 import org.academiadecodigo.hackathon.runner_bros.utils.Constants;
 import org.academiadecodigo.hackathon.runner_bros.utils.WorldUtils;
@@ -40,7 +41,7 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
     }
 
 
-    private Sprite sprite = new Sprite(new Texture(Gdx.files.internal("images/logo.png")));
+    private Sprite sprite = new Sprite(AssetManager.instance.sonic);
 
 
     private World world;
@@ -98,14 +99,15 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
     private void setUpWall(){
 
 
-
-        //wall2 = new Wall(WorldUtils.createWall(world, 15, 3, 0.2f, 5));
-
-        //addActor(wall2);
-    }
+        for(int i = 0; i < 2000; i++){
+        wall2 = new Wall(WorldUtils.createWall(world, i*20, 3, 0.2f, 2));
+        addActor(wall2);
+        }
+   }
 
     private void setUpRunner() {
         runner2 = new Runner(WorldUtils.createRunner(world, 2f, 2f, 1f, 1f),sprite);
+
         addActor(runner2);
     }
 
@@ -137,9 +139,7 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
         }
 
         //TODO: Implement interpolation
-
     }
-
 
 
     @Override
@@ -148,30 +148,51 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
         camera.position.set(runner2.getBodyPositionX() + 3, runner2.getBodyPositionY() + 5, 0f);
         camera.update();
 
+
+        //System.out.println(runner2.getBody().getLinearVelocity().x);
+        if(runner2.getBody().getLinearVelocity().x < Constants.RUNNER_MAX_VELOCITY){
+            runner2.getBody().applyLinearImpulse(Constants.RUNNER_RUNNING_LINEAR_IMPULSE_RIGHT, runner2.getBody().getWorldCenter(), true);
+        }
+        //runner2.getBody().setLinearVelocity(20f, 0);
+
+        if(jumped){
+            runner2.getBody().applyLinearImpulse(Constants.RUNNER_JUMPING_LINEAR_IMPULSE, runner2.getBody().getWorldCenter(), true);
+            jumped = false;
+        }
+
+        /*
         if (runner2.isRunningRight()) {
             System.out.println("running right");
 
-            runner2.getBody().applyLinearImpulse(Constants.RUNNER_RUNNING_LINEAR_IMPULSE_RIGHT, runner2.getBody().getWorldCenter(), true);
+            //runner2.getBody().applyLinearImpulse(Constants.RUNNER_RUNNING_LINEAR_IMPULSE_RIGHT, runner2.getBody().getWorldCenter(), true);
             //runner2.getBody().getPosition().x -= 5 * Gdx.graphics.getDeltaTime();
+
         }
+        */
+        /*
         if (runner2.isRunningLeft()) {
             System.out.println("running left");
 
             runner2.getBody().applyLinearImpulse(Constants.RUNNER_RUNNING_LINEAR_IMPULSE_LEFT, runner2.getBody().getWorldCenter(), true);
             //runner2.getBody().getPosition().x += 5 * Gdx.graphics.getDeltaTime();
         }
+        */
 
 
         renderer.render(world, camera.combined);
 
         spriteBatch.begin();
-        spriteBatch.draw(sprite, runner2.getBodyPositionX(), runner2.getBodyPositionY(), runner2.getWidth(), runner2.getHeight());
+
+        spriteBatch.draw(sprite, runner2.getBodyPositionX(), runner2.getBodyPositionY(), sprite.getWidth(), sprite.getHeight());
         spriteBatch.end();
 
 
 
 
     }
+
+
+    private boolean jumped = false;
 
     @Override
     public boolean keyDown(int key){
@@ -180,7 +201,14 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
         {
 
             case Input.Keys.SPACE:
-                runner2.jump();
+
+
+                if(!runner2.isJumping()){
+                    System.out.println("space key");
+                    runner2.jump();
+                    jumped = true;
+                }
+
                 break;
             case Input.Keys.LEFT:
                 System.out.println("key left down");
@@ -254,14 +282,17 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
 
     @Override
     public void beginContact(Contact contact) {
+        System.out.println("begin contact");
         Body a = contact.getFixtureA().getBody();
         Body b = contact.getFixtureB().getBody();
 
         if ((BodyUtils.bodyIsRunner(a) && BodyUtils.bodyIsGround(b)) ||
                 (BodyUtils.bodyIsGround(a) && BodyUtils.bodyIsRunner(b))) {
+
             runner2.landed();
         }
     }
+
 
     @Override
     public void endContact(Contact contact) {

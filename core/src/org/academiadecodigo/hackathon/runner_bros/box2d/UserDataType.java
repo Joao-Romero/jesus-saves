@@ -6,6 +6,7 @@ package org.academiadecodigo.hackathon.runner_bros.box2d;
 public enum UserDataType {
 
     GROUND,
-    RUNNER
+    RUNNER,
+    WALL
 
 }

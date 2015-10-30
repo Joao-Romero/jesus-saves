@@ -80,7 +80,9 @@ public class WorldUtils {
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(new Vector2(x, y));
         PolygonShape shape = new PolygonShape();
+        //CircleShape shape = new CircleShape();
         shape.setAsBox(0.5f, 0.5f, new Vector2(2, 2), 45);
+        //shape.setRadius(0.2f);
         Body body = world.createBody(bodyDef);
 
         body.setGravityScale(Constants.RUNNER_GRAVITY_SCALE);

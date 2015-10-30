@@ -1,6 +1,7 @@
 package org.academiadecodigo.hackathon.runner_bros.gameobjects;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import org.academiadecodigo.hackathon.runner_bros.box2d.RunnerUserData;
 
@@ -11,6 +12,11 @@ public class Runner extends GameActor {
 
     private boolean runningRight;
     private boolean runningLeft;
+
+    public boolean isJumping() {
+        return jumping;
+    }
+
     private boolean jumping;
     private boolean dodging;
 
@@ -35,6 +41,7 @@ public class Runner extends GameActor {
 
 
     public void landed() {
+        System.out.println("landed");
         jumping = false;
     }
 
@@ -59,6 +66,8 @@ public class Runner extends GameActor {
         return body.getPosition().x;
     }
 
+
+
     public float getBodyPositionY(){
 
         return body.getPosition().y;
@@ -79,11 +88,10 @@ public class Runner extends GameActor {
 
 
 
-
     public void jump() {
 
         if (!(jumping || dodging)) {
-            body.applyLinearImpulse(getUserData().getJumpingLinearImpulse(), body.getWorldCenter(), true);
+            //body.applyLinearImpulse(new Vector2(0, 20f), body.getWorldCenter(), true);
             jumping = true;
         }
 
