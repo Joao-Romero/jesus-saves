@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="16" height="13" tilewidth="32" tileheight="32" nextobjectid="8">
+ <tileset firstgid="1" name="nuvensdodiogo" tilewidth="32" tileheight="32" tilecount="208">
+  <image source="nuvensdodiogo.png" width="512" height="416"/>
+ </tileset>
+ <tileset firstgid="209" name="7086" tilewidth="32" tileheight="32" tilecount="2346">
+  <image source="7086.png" width="1497" height="1663"/>
+ </tileset>
+ <layer name="BackgroundTiles" width="16" height="13">
+  <data encoding="base64" compression="zlib">
+   eJwNwwdXDgAAAMDPyAglZCRkJpGRrJC9siKbZO+QLbJDRgnZm8wkGdlCRoif1N17VysQCNS2jnUNsp71bWBDg21kY5sYYqhNDbOZzW1huC1tZWvbGGFbI21nezsYZUc72dkudrWb0XY3xh7G2tNextnbPva1n/H2N8EBDnSQgx1iokMd5nCTHOFIRznaMY51nOOd4EQnmexkpzjVaU43xRnONNVZznaOc53nfBe40EWmudh0l7jUZS53hStd5WrXuNZ1rneDGW50k5vNdItb3eZ2d7jTXe42yz3uNdt97veABz3kYY+Y41GPedxcT3jSU542z3zPWOBZz3neQi940Ute9opXveZ1b3jTW972jne9Z5H3feBDH/nYJxb71BKfWepzy3zhS1/52nLf+NZ3vveDH/3kZyv84le/Wel3f/jTX1b52z/+tdp//rcG5mRU6Q==
+  </data>
+ </layer>
+ <objectgroup name="Ground">
+  <object id="1" x="0" y="352" width="512" height="64"/>
+ </objectgroup>
+ <layer name="GroundTiles" width="16" height="13">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2DogvXslOE7FGIAP9oZkQ==
+  </data>
+ </layer>
+</map>

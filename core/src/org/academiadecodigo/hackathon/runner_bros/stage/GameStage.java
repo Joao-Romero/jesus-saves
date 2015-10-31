@@ -7,6 +7,11 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -72,16 +77,41 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
 
     private Vector3 touchPoint;
 
+    private TmxMapLoader mapLoader;
+    private TiledMap map;
+    private OrthogonalTiledMapRenderer mapRenderer;
+
 
     private void setUpWorld() {
         world = WorldUtils.createWorld();
         // Let the world now you are handling contacts
         world.setContactListener(this);
-        setUpGround();
-        setUpPlatforms();
-        setUpWall();
-        setUpPowerUps();
+        loadMap(3);
+
+        //setUpGround();
+        //setUpPlatforms();
+        //setUpWall();
+        //setUpPowerUps();
         setUpRunner();
+    }
+
+    private void loadMap(int number) {
+        mapLoader = new TmxMapLoader();
+        map = mapLoader.load("images/Map" + number + ".tmx");
+        mapRenderer = new OrthogonalTiledMapRenderer(map, 1/32f);
+        System.out.println("Load map");
+
+
+        for(MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)) {
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
+            ground = new Ground(WorldUtils.createGround(world, (rect.getX() + rect.getWidth() / 2) / 32,
+                    (rect.getY() + rect.getHeight() / 2) / 32,
+                    rect.getWidth() / 32,
+                    rect.getHeight() / 32, 0));
+
+            addActor(ground);
+        }
     }
 
     private void setUpGround() {
@@ -184,16 +214,15 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
 
         }
 
-
+        mapRenderer.setView(camera);
+        mapRenderer.render();
         renderer.render(world, camera.combined);
 
         spriteBatch.begin();
 
         spriteBatch.draw(sprite, runner.getBodyPositionX(), runner.getBodyPositionY(), sprite.getWidth(), sprite.getHeight());
         spriteBatch.end();
-
-
-
+        
 
     }
 
@@ -362,13 +391,6 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
                 Runner runner2 = getRunnerFromBody(orderedBody[1]);
                 runner2.setNextToRunner(false);
         }
-
-
-
-
-
-
-
 
     }
 

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="600" height="13" tilewidth="32" tileheight="32" nextobjectid="22">
+ <tileset firstgid="1" name="nuvensdodiogo" tilewidth="32" tileheight="32" tilecount="208">
+  <image source="nuvensdodiogo.png" width="512" height="416"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="600" height="13">
+  <data encoding="base64" compression="zlib">
+   eJztwQEBAAAAgiD/r25IQAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHwZeeAAAQ==
+  </data>
+ </layer>
+ <layer name="Tile Layer 2" width="600" height="13">
+  <data encoding="base64" compression="zlib">
+   eJzty1V7DmAAgOFvupnetIkx3QzDJma6pk13m5iaZqab6e7J6ZqciZ/kOXW9f+E5uA/vqEgkUgIlUQqlUQZlUQ7lUQEVUQmVUQVVUQ1Rfr/f7/f7/f7/fjSqowZqohZqow7qIgaxqIf6aICGaITGfr/f7/f7/f7gN0FTxKEZmqMFWiIerdAaCWiDtmiH9ujg9/v9fr/f7w9+R3RCZ3RBV3RDd/RAT/RCInqjD/oiCf38fr/f7/f7/cHvjwFIRgoGYhAGYwhSMRRpGIbhGIGRGOX3+/1+v9/vD/5ojMFYjMN4TEA6JmISJmMKpmIapmMGMvx+v9/v9/v9wZ+JWZiNOZiLeZiPBViIRViMJViKZViOFX6/3+/3+/3+4K/EKqzGGmRiLdZhPTYgCxuxCZuxBVuR7ff7/X6/3+8P/jZsxw7sxC7sxh7sxT7kYD9ycQAHcQiH/X6/3+/3+/3BP4KjOIbjOIGTOIXTOIOzOIc8nMcFXMQlv9/v9/v9fn/wL+MKruIaruMGbuIWbuMO7uIe7uMBHiLf7/f7/X6/3x/8R3iMJ3iKZ3iOArzAS7zCa7zBW7zDe3zw+/1+v9/v9wf/Iz6hEJ/xBV/xDd/xA0X4iWL8wm/8wV+/3+/3+/1+f/D/AT3HbxE=
+  </data>
+ </layer>
+ <objectgroup name="Ground">
+  <object id="1" x="0" y="353" width="1280" height="62"/>
+  <object id="17" x="1342" y="353" width="95" height="62"/>
+  <object id="18" x="1472" y="321" width="95" height="62"/>
+  <object id="19" x="1600" y="287" width="95" height="64"/>
+  <object id="20" x="1856" y="287" width="95" height="64"/>
+ </objectgroup>
+</map>
