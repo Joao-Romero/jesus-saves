@@ -31,7 +31,7 @@ public class AudioManager {
         // load and start playing music
         menuMusic = Gdx.audio.newMusic(Gdx.files.internal("music/menu.mp3"));
         menuMusic.setLooping(true);
-        menuMusic.setVolume(0.8f);
+        menuMusic.setVolume(1f);
 
         // load and start playing music
         gameOverMusic = Gdx.audio.newMusic(Gdx.files.internal("music/over.mp3"));
