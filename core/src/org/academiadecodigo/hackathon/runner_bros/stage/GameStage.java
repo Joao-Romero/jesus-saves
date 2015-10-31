@@ -4,8 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -50,9 +52,14 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
 
 
     private Sprite sprite = new Sprite(AssetManager.instance.sonic);
+    private Sprite sprite2 = new Sprite(AssetManager.instance.crash);
+    private Animation animation;
+    private Animation animation2;
 
+    private TextureRegion currentFrame;
+    private TextureRegion currentFrame2;
 
-
+    private float stateTime;
 
     private World world;
     private Ground ground;
@@ -82,11 +89,15 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
         world.setContactListener(this);
         loadMap(1);
 
-        //setUpGround();
-        //setUpPlatforms();
-        //setUpWall();
-        //setUpPowerUps();
         setUpRunner();
+
+        animation = AssetManager.instance.sonicAnimation;
+        animation2 = AssetManager.instance.crashAnimation;
+
+        sprite.setRegion(animation.getKeyFrame(0));
+        sprite.setSize(1, 1);
+        sprite2.setRegion(animation2.getKeyFrame(0));
+        sprite2.setSize(1,1);
     }
 
     private void loadMap(int number) {
@@ -145,43 +156,6 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
 
     }
 
-    private void setUpGround() {
-        ground = new Ground(WorldUtils.createGround(world, 0f, 2f, 100000, 2, 0));
-        //ground2 = new Ground(WorldUtils.createGround(world, 17f , 2f, 10, 2, 1));
-        //ground3 = new Ground(WorldUtils.createGround(world, 30f , 4f, 10, 0.5f, 0));
-        addActor(ground);
-    }
-
-    private void setUpPlatforms() {
-        MovingPlatform platform;
-        for(int i = 0; i < 2000; i++){
-
-            platform = new MovingPlatform(WorldUtils.createMovingPlatform(world, i * 10f, 10f, 7, 0.5f, 0));
-
-            addActor(platform);
-        }
-
-    }
-
-    private void setUpPowerUps(){
-        PowerUp powerUp;
-        for (int i = 0;i<2000;i++){
-            powerUp = new PowerUp(WorldUtils.createPowerUp(world,i * 75f,4.2f,1,1,0));
-
-            System.out.println(powerUp.getUserData().getUserDataType());
-
-            addActor(powerUp);
-        }
-    }
-
-    private void setUpWall(){
-        Wall wall;
-        for(int i = 0; i < 2000; i++){
-        wall = new Wall(WorldUtils.createWall(world, i*20, 3, 0.2f, 1.5f));
-        addActor(wall);
-        }
-   }
-
     private void setUpRunner() {
         runner = new Runner(WorldUtils.createRunner(world,10f,2f,1f,1f),sprite);
         runner2 = new Runner(WorldUtils.createRunner(world, 10f, 2f, 1f, 1f),sprite);
@@ -232,8 +206,6 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
         return result;
     }
 
-
-
     @Override
     public void draw() {
         super.draw();
@@ -242,6 +214,11 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
 
         camera.position.set(frontRunner.getBodyPositionX() + 3, 6.5f, 0f);
         camera.update();
+
+        sprite.setPosition(runner.getBody().getPosition().x + 1.6f, runner.getBody().getPosition().y + 1.6f);
+        sprite2.setPosition(runner2.getBody().getPosition().x + 1.6f, runner2.getBody().getPosition().y + 1.6f);
+
+
 
         for(Actor actor:getActors()){
             if(!(actor instanceof Runner)){
@@ -265,16 +242,20 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
         mapRenderer.render();
         renderer.render(world, camera.combined);
 
+        spriteBatch.setProjectionMatrix(camera.combined);
         spriteBatch.begin();
-
-        spriteBatch.draw(sprite, runner.getBodyPositionX(), runner.getBodyPositionY(), sprite.getWidth(), sprite.getHeight());
+        stateTime+=Gdx.graphics.getDeltaTime();
+        currentFrame = animation.getKeyFrame(stateTime,true);
+        currentFrame2 = animation2.getKeyFrame(stateTime,true);
+        sprite.setRegion(currentFrame);
+        sprite2.setRegion(currentFrame2);
+        //spriteBatch.draw(sprite, runner.getBodyPositionX(), runner.getBodyPositionY(), sprite.getWidth(), sprite.getHeight());
+        sprite.draw(spriteBatch);
+        sprite2.draw(spriteBatch);
         spriteBatch.end();
 
 
     }
-
-
-
 
     @Override
     public boolean keyDown(int key){
@@ -326,11 +307,6 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-
-        /*if (runner.isDodging()) {
-            runner.stopDodge();
-        }*/
-
         return super.touchUp(screenX, screenY, pointer, button);
     }
 
@@ -365,49 +341,22 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
 
         switch (userDataType){
             case GROUND:
-                //System.out.println(runner+" landed");
                 runner.landed();
                 System.out.println("Hit ground");
                 break;
             case WALL:
-                //System.out.println(runner +" walled");
                 runner.setNextToWall(true);
                 System.out.println("Hit wall");
                 break;
             case RUNNER:
-                //System.out.println(runner +" runned");
                 runner.setNextToRunner(true);
                 Runner runner2 = getRunnerFromBody(orderedBody[1]);
                 runner2.setNextToRunner(true);
                 break;
             case POWERUP:
                 System.out.println("powered");
-
-                getFrontRunner().getBody().applyLinearImpulse(new Vector2(-10f, 0), runner.getBody().getWorldCenter(), true);
-                getOtherRunner(getFrontRunner()).getBody().applyLinearImpulse(new Vector2(10f, 0), runner.getBody().getWorldCenter(), true);
-                /*
-                float dx = runner.getBodyPositionX() - getOtherRunner(runner).getBodyPositionX();
-                float dy = runner.getBodyPositionY() - getOtherRunner(runner).getBodyPositionY();
-                Vector2 vector2 = new Vector2(dx,dy);
-                */
-                //System.out.println(dx);
-                //System.out.println(dy);
-                //getOtherRunner(runner).getBody().setTransform(vector2,0);
-                //getOtherRunner(runner).getBody().setTransform(dx,dy,0);
-
-
-                /*
-                Runner changingRunner;
-                if(runner.equals(this.runner)){
-                    changingRunner = this.runner;
-
-                } else {
-                    changingRunner = this.runner2;
-
-                }
-                changingRunner = new Runner(WorldUtils.createRunner(world,runner.getBodyPositionX(),runner.getBodyPositionY(),1f,1f),sprite);
-                addActor(changingRunner);
-                */
+                getFrontRunner().getBody().applyLinearImpulse(new Vector2(-2.5f, 0f), runner.getBody().getWorldCenter(), true);
+                getOtherRunner(getFrontRunner()).getBody().applyLinearImpulse(new Vector2(1f, 1f), runner.getBody().getWorldCenter(), true);
                 break;
             case FINISHLINE:
                 Main.gameManager.setWinner(runner);

@@ -13,14 +13,32 @@ public class GameManager {
     private Boolean gameOver;
     private Game game;
 
+    private long startTime;
+    private long endTime;
+
+    public long getGameTime() {
+        return gameTime;
+    }
+
+    private long gameTime;
+
     public GameManager(Game game){
         this.game = game;
     }
     public void setWinner(Runner winner) {
+            endTimer();
             this.winner = winner;
             this.gameOver = true;
             setScreen(Main.gameOverScreen);
+    }
 
+    public void startTimer(){
+        startTime = System.currentTimeMillis();
+    }
+
+    public void endTimer(){
+        endTime = System.currentTimeMillis();
+        gameTime = (endTime - startTime)/1000;
     }
 
     public void setScreen(Screen screen) {

@@ -36,7 +36,6 @@ public class MenuScreen implements Screen {
         logo.setPosition((Constants.APP_WIDTH - logo.getWidth()) / 2, (Constants.APP_HEIGHT - logo.getHeight()) / 2);
         stage.addActor(logo);
 
-
         Gdx.input.setInputProcessor(stage);
 
     }
@@ -47,7 +46,6 @@ public class MenuScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || Gdx.input.isTouched()) {
-            //game.setScreen(Main.gameScreen);
             Main.gameManager.setScreen(Main.gameScreen);
             Gdx.input.setInputProcessor(Main.gameScreen.getStage());
         }
@@ -57,26 +55,26 @@ public class MenuScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
+        // empty
     }
 
     @Override
     public void pause() {
-
+        // empty
     }
 
     @Override
     public void resume() {
-
+        // empty
     }
 
     @Override
     public void hide() {
-
+        // empty
     }
 
     @Override
     public void dispose() {
-
+        // empty
     }
 }

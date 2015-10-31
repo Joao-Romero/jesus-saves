@@ -14,7 +14,6 @@ import com.esotericsoftware.kryonet.Client;
 public class Main extends Game{
 
     public static GameManager gameManager;
-
     public static MenuScreen menuScreen;
     public static GameScreen gameScreen;
     public static GameOverScreen gameOverScreen;
@@ -24,23 +23,9 @@ public class Main extends Game{
     @Override
     public void create() {
         gameManager = new GameManager(this);
-        //worldController = new WorldController();
-        //worldRenderer = new WorldRenderer(worldController);
-
-        //screenWidth = Gdx.graphics.getWidth();
-        //screenHeight = Gdx.graphics.getHeight();
-
-//        gameWidth = screenWidth * 2;
-  //      gameHeight = screenHeight;
-
         menuScreen = new MenuScreen(this);
         gameScreen = new GameScreen(this);
         gameOverScreen = new GameOverScreen(this);
         setScreen(menuScreen);
-        Client client = new Client();
-
-
-        //RestConnector restConnector = new RestConnector();
-
     }
 }

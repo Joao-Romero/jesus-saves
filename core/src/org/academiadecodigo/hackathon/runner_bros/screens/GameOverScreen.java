@@ -5,7 +5,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import org.academiadecodigo.hackathon.runner_bros.Main;
+import org.academiadecodigo.hackathon.runner_bros.manager.AssetManager;
+import org.academiadecodigo.hackathon.runner_bros.utils.Constants;
 
 /**
  * Created by cadet on 31/10/15.
@@ -19,7 +24,6 @@ public class GameOverScreen implements Screen {
     }
     @Override
     public void show() {
-
     }
 
     @Override
@@ -32,30 +36,39 @@ public class GameOverScreen implements Screen {
             game.setScreen(Main.gameScreen);
             Gdx.input.setInputProcessor(Main.gameScreen.getStage());
         }
+        Stage stage = new Stage();
+        Skin skin = AssetManager.instance.skin;
+        Label label = new Label((int)Main.gameManager.getGameTime()+" seconds",skin);
+        label.setPosition((Constants.APP_WIDTH-label.getWidth())/2,(Constants.APP_HEIGHT-label.getHeight())/2);
+        stage.addActor(label);
+
+        stage.draw();
+
+
     }
 
     @Override
     public void resize(int width, int height) {
-
+        // empty
     }
 
     @Override
     public void pause() {
-
+        // empty
     }
 
     @Override
     public void resume() {
-
+        // empty
     }
 
     @Override
     public void hide() {
-
+        // empty
     }
 
     @Override
     public void dispose() {
-
+        // empty
     }
 }

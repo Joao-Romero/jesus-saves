@@ -22,6 +22,7 @@ public class GameScreen implements Screen {
     public GameScreen(Game game) {
         stage = new GameStage();
         this.game = game;
+        Main.gameManager.startTimer();
     }
 
     @Override
@@ -30,23 +31,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta){
-        /*
-        // set the world controller as input processor
-        if(!(Gdx.input.getInputProcessor() instanceof WorldController)){
-            Gdx.input.setInputProcessor(Main.worldController);
-        }
 
-        Main.worldController.update(Gdx.graphics.getDeltaTime());
-
-        // Sets the clear screen color to: Black
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        System.out.println("Drawing black screen");
-
-        // render game world to screen
-        Main.worldRenderer.render();
-        */
         //Clear the screen
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -58,26 +43,26 @@ public class GameScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
+        // empty
     }
 
     @Override
     public void pause() {
-
+        // empty
     }
 
     @Override
     public void resume() {
-
+        // empty
     }
 
     @Override
     public void hide() {
-
+        // empty
     }
 
     @Override
     public void dispose() {
-
+        // empty
     }
 }
