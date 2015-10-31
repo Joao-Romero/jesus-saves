@@ -14,16 +14,13 @@ public class GameManager {
     private Runner winner;
     private Boolean gameOver;
     private Game game;
-
     private long startTime;
     private long endTime;
-
     private long gameTime;
 
     public long getGameTime() {
         return gameTime;
     }
-
 
     public Runner getWinner() {
         return winner;

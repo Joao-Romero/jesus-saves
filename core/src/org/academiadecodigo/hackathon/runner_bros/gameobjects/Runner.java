@@ -57,7 +57,6 @@ public class Runner extends GameActor {
     public Runner(Body body,RunnerType runnerType,Sprite sprite) {
 
         super(body);
-        //sprite = AssetManager.instance.runnerSprites.get(runnerType);
         this.sprite = sprite;
         this.type = runnerType;
     }
@@ -70,19 +69,16 @@ public class Runner extends GameActor {
 
 
     public float getBodyPositionX(){
-
         return body.getPosition().x;
     }
 
 
 
     public float getBodyPositionY(){
-
         return body.getPosition().y;
     }
 
     public Body getBody(){
-
         return super.body;
     }
 

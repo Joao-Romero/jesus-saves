@@ -84,7 +84,6 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
         setUpWorld();
         setupCamera();
         setupTouchControlAreas();
-        //renderer = new Box2DDebugRenderer();
     }
 
 

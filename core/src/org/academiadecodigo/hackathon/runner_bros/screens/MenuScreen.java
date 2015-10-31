@@ -20,7 +20,6 @@ public class MenuScreen implements Screen {
 
     private Stage stage;
     private Skin skin;
-
     private Game game;
 
     public MenuScreen(Game game) {

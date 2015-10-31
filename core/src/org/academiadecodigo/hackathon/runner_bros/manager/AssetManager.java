@@ -19,30 +19,21 @@ public class AssetManager {
 
 
     public static final String TEXTURE_ATLAS = "images/pack4.atlas";
-
-
     public static final AssetManager instance = new AssetManager();
-
     public Skin skin;
     public Image menuImage;
     public Image sonicWinner;
     public Image crashWinner;
     public Image marioWinner;
     public Image pikachuWinner;
-
-
     public TextureAtlas.AtlasRegion sonic;
     public TextureAtlas.AtlasRegion crash;
     public TextureAtlas.AtlasRegion mario;
     public TextureAtlas.AtlasRegion pikachu;
-
-
     public Animation sonicAnimation;
     public Animation crashAnimation;
     public Animation marioAnimation;
     public Animation pikachuAnimation;
-
-
 
     private AssetManager(){
         init();

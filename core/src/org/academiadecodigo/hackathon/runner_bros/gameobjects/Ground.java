@@ -12,7 +12,6 @@ public class Ground extends GameActor {
     }
 
     public Body getBody(){
-
         return super.body;
     }
 }

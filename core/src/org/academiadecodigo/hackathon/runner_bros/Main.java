@@ -19,8 +19,6 @@ public class Main extends Game{
     public static GameScreen gameScreen;
     public static GameOverScreen gameOverScreen;
 
-
-
     @Override
     public void create() {
         audioManager = new AudioManager();

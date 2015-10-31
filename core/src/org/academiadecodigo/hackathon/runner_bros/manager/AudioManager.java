@@ -8,21 +8,16 @@ import com.badlogic.gdx.audio.Sound;
  * Created by cadet on 31/10/15.
  */
 public class AudioManager {
+    public static Music gameMusic;
+    public static Music menuMusic;
+    public static Music gameOverMusic;
+    private Music[] musics;
+    public static Sound powerUp;
 
     public static final AudioManager instance = new AudioManager();
 
     public AudioManager() {
     }
-
-
-    public static Music gameMusic;
-    public static Music menuMusic;
-    public static Music gameOverMusic;
-
-    private Music[] musics;
-
-    public static Sound powerUp;
-
 
     public void init() {
         //load sounds
