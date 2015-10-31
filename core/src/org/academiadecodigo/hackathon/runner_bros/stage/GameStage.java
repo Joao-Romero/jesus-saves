@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapObject;
@@ -18,21 +17,15 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.Array;
 import org.academiadecodigo.hackathon.runner_bros.box2d.MovingPlatform;
 import org.academiadecodigo.hackathon.runner_bros.box2d.UserData;
 import org.academiadecodigo.hackathon.runner_bros.box2d.UserDataType;
-import org.academiadecodigo.hackathon.runner_bros.gameobjects.Ground;
-import org.academiadecodigo.hackathon.runner_bros.gameobjects.PowerUp;
-import org.academiadecodigo.hackathon.runner_bros.gameobjects.Runner;
-import org.academiadecodigo.hackathon.runner_bros.gameobjects.Wall;
+import org.academiadecodigo.hackathon.runner_bros.gameobjects.*;
 import org.academiadecodigo.hackathon.runner_bros.manager.AssetManager;
 import org.academiadecodigo.hackathon.runner_bros.utils.BodyUtils;
 import org.academiadecodigo.hackathon.runner_bros.utils.Constants;
 import org.academiadecodigo.hackathon.runner_bros.utils.WorldUtils;
-import org.academiadecodigo.hackathon.runner_bros.box2d.UserDataType;
 
-import static org.academiadecodigo.hackathon.runner_bros.box2d.UserDataType.GROUND;
 
 /**
  * Created by cadet on 30/10/15.
@@ -123,7 +116,7 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
 
             addActor(wall);
         }
-
+        /*
         for(MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
@@ -134,6 +127,19 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
 
             addActor(powerUp);
         }
+        */
+
+        for(MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)) {
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
+            FinishLine finishLine = new FinishLine(WorldUtils.createFinishLine(world, 100,
+                    1,
+                    rect.getWidth() / 32,
+                    rect.getHeight() / 32, 0));
+
+            addActor(finishLine);
+        }
+
 
 
     }
@@ -212,13 +218,29 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
         //TODO: Implement interpolation
     }
 
+    private Runner getFrontRunner(){
+
+        Runner result = null;
+
+        for(Actor actor:getActors()){
+            if(!(actor instanceof Runner)){
+                continue;
+            }
+            result = (result == null || ((Runner)actor).getBodyPositionX() > ((Runner)result).getBodyPositionX()) ? (Runner) actor : result;
+        }
+        return result;
+    }
+
 
     @Override
     public void draw() {
         super.draw();
-        camera.position.set(runner.getBodyPositionX() + 3, runner.getBodyPositionY() + 5, 0f);
+
+        Runner frontRunner = getFrontRunner();
+        System.out.println(frontRunner.getBodyPositionX());
+
+        camera.position.set(frontRunner.getBodyPositionX() + 3, frontRunner.getBodyPositionY() + 5, 0f);
         camera.update();
-        //Kryo kryo = new Kyro();
 
         for(Actor actor:getActors()){
             if(!(actor instanceof Runner)){
@@ -360,6 +382,9 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
             case POWERUP:
                 System.out.println("powered");
                 getOtherRunner(runner).getBody().applyLinearImpulse(new Vector2(-5f, 0), runner.getBody().getWorldCenter(), true);
+                break;
+            case FINISHLINE:
+                System.out.println("finished");
                 break;
         }
 

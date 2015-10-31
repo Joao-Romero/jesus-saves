@@ -71,6 +71,20 @@ public class WorldUtils {
         return body;
     }
 
+    public static Body createFinishLine(World world, float x, float y, float width, float height, float restituition){
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.position.set(new Vector2(x, y));
+        Body body = world.createBody(bodyDef);
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(width / 2, height / 2);
+        Fixture fixture = body.createFixture(shape, Constants.WALL_DENSITY);
+        fixture.setRestitution(restituition);
+        fixture.setSensor(true);
+        body.setUserData(new UserData(UserDataType.FINISHLINE));
+        shape.dispose();
+        return body;
+    }
+
     public static Body createMovingPlatform(World world, float x, float y, float width, float height, float restituition) {
 
         BodyDef bodyDef = new BodyDef();

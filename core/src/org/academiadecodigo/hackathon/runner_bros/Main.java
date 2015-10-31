@@ -4,6 +4,8 @@ import com.badlogic.gdx.Game;
 import org.academiadecodigo.hackathon.runner_bros.manager.GameManager;
 import org.academiadecodigo.hackathon.runner_bros.screens.GameScreen;
 import org.academiadecodigo.hackathon.runner_bros.screens.MenuScreen;
+import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryonet.Client;
 
 /**
  * Created by cadet on 29/10/15.
@@ -32,6 +34,8 @@ public class Main extends Game{
         menuScreen = new MenuScreen(this);
         gameScreen = new GameScreen();
         setScreen(menuScreen);
+        Client client = new Client();
+
 
         //RestConnector restConnector = new RestConnector();
 

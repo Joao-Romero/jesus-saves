@@ -8,6 +8,7 @@ public enum UserDataType {
     GROUND,
     RUNNER,
     WALL,
-    POWERUP;
+    POWERUP,
+    FINISHLINE;
 
 }
