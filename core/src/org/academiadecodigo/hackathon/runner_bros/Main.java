@@ -2,6 +2,7 @@ package org.academiadecodigo.hackathon.runner_bros;
 
 import com.badlogic.gdx.Game;
 import org.academiadecodigo.hackathon.runner_bros.manager.GameManager;
+import org.academiadecodigo.hackathon.runner_bros.screens.GameOverScreen;
 import org.academiadecodigo.hackathon.runner_bros.screens.GameScreen;
 import org.academiadecodigo.hackathon.runner_bros.screens.MenuScreen;
 import com.esotericsoftware.kryo.Kryo;
@@ -16,12 +17,13 @@ public class Main extends Game{
 
     public static MenuScreen menuScreen;
     public static GameScreen gameScreen;
+    public static GameOverScreen gameOverScreen;
 
 
 
     @Override
     public void create() {
-        gameManager = new GameManager();
+        gameManager = new GameManager(this);
         //worldController = new WorldController();
         //worldRenderer = new WorldRenderer(worldController);
 
@@ -32,7 +34,8 @@ public class Main extends Game{
   //      gameHeight = screenHeight;
 
         menuScreen = new MenuScreen(this);
-        gameScreen = new GameScreen();
+        gameScreen = new GameScreen(this);
+        gameOverScreen = new GameOverScreen(this);
         setScreen(menuScreen);
         Client client = new Client();
 

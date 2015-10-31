@@ -2,6 +2,7 @@ package org.academiadecodigo.hackathon.runner_bros.gameobjects;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.Body;
+import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
 
 /**
  * Created by cadet on 30/10/15.

@@ -47,7 +47,8 @@ public class MenuScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || Gdx.input.isTouched()) {
-            game.setScreen(Main.gameScreen);
+            //game.setScreen(Main.gameScreen);
+            Main.gameManager.setScreen(Main.gameScreen);
             Gdx.input.setInputProcessor(Main.gameScreen.getStage());
         }
 

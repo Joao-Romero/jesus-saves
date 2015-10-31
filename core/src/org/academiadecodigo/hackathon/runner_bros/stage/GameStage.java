@@ -17,6 +17,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import org.academiadecodigo.hackathon.runner_bros.Main;
 import org.academiadecodigo.hackathon.runner_bros.box2d.MovingPlatform;
 import org.academiadecodigo.hackathon.runner_bros.box2d.UserData;
 import org.academiadecodigo.hackathon.runner_bros.box2d.UserDataType;
@@ -116,7 +117,7 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
 
             addActor(wall);
         }
-        /*
+
         for(MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
@@ -127,13 +128,13 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
 
             addActor(powerUp);
         }
-        */
 
-        for(MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)) {
+
+        for(MapObject object : map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
-            FinishLine finishLine = new FinishLine(WorldUtils.createFinishLine(world, 100,
-                    1,
+            FinishLine finishLine = new FinishLine(WorldUtils.createFinishLine(world, (rect.getX() + rect.getWidth() / 2) / 32,
+                    (rect.getY() + rect.getHeight() / 2) / 32,
                     rect.getWidth() / 32,
                     rect.getHeight() / 32, 0));
 
@@ -182,8 +183,8 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
    }
 
     private void setUpRunner() {
-        runner = new Runner(WorldUtils.createRunner(world,2f,2f,1f,1f),sprite);
-        runner2 = new Runner(WorldUtils.createRunner(world, 2f, 2f, 1f, 1f),sprite);
+        runner = new Runner(WorldUtils.createRunner(world,10f,2f,1f,1f),sprite);
+        runner2 = new Runner(WorldUtils.createRunner(world, 10f, 2f, 1f, 1f),sprite);
         addActor(runner);
         addActor(runner2);
     }
@@ -232,14 +233,14 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
     }
 
 
+
     @Override
     public void draw() {
         super.draw();
 
         Runner frontRunner = getFrontRunner();
-        System.out.println(frontRunner.getBodyPositionX());
 
-        camera.position.set(frontRunner.getBodyPositionX() + 3, frontRunner.getBodyPositionY() + 5, 0f);
+        camera.position.set(frontRunner.getBodyPositionX() + 3, 6.5f, 0f);
         camera.update();
 
         for(Actor actor:getActors()){
@@ -381,9 +382,35 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
                 break;
             case POWERUP:
                 System.out.println("powered");
-                getOtherRunner(runner).getBody().applyLinearImpulse(new Vector2(-5f, 0), runner.getBody().getWorldCenter(), true);
+
+                getFrontRunner().getBody().applyLinearImpulse(new Vector2(-10f, 0), runner.getBody().getWorldCenter(), true);
+                getOtherRunner(getFrontRunner()).getBody().applyLinearImpulse(new Vector2(10f, 0), runner.getBody().getWorldCenter(), true);
+                /*
+                float dx = runner.getBodyPositionX() - getOtherRunner(runner).getBodyPositionX();
+                float dy = runner.getBodyPositionY() - getOtherRunner(runner).getBodyPositionY();
+                Vector2 vector2 = new Vector2(dx,dy);
+                */
+                //System.out.println(dx);
+                //System.out.println(dy);
+                //getOtherRunner(runner).getBody().setTransform(vector2,0);
+                //getOtherRunner(runner).getBody().setTransform(dx,dy,0);
+
+
+                /*
+                Runner changingRunner;
+                if(runner.equals(this.runner)){
+                    changingRunner = this.runner;
+
+                } else {
+                    changingRunner = this.runner2;
+
+                }
+                changingRunner = new Runner(WorldUtils.createRunner(world,runner.getBodyPositionX(),runner.getBodyPositionY(),1f,1f),sprite);
+                addActor(changingRunner);
+                */
                 break;
             case FINISHLINE:
+                Main.gameManager.setWinner(runner);
                 System.out.println("finished");
                 break;
         }
