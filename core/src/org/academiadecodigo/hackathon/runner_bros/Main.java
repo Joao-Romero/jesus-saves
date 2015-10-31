@@ -33,5 +33,7 @@ public class Main extends Game{
         gameScreen = new GameScreen();
         setScreen(menuScreen);
 
+        //RestConnector restConnector = new RestConnector();
+
     }
 }

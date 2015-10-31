@@ -7,6 +7,7 @@ public enum UserDataType {
 
     GROUND,
     RUNNER,
-    WALL
+    WALL,
+    POWERUP;
 
 }

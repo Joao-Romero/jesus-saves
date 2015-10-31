@@ -19,7 +19,9 @@ public abstract class GameActor extends Actor {
         this.userData = (UserData) body.getUserData();
     }
 
-    public abstract UserData getUserData();
+    public UserData getUserData() {
+        return userData;
+    }
 
     public Sprite getSprite() {
         return sprite;

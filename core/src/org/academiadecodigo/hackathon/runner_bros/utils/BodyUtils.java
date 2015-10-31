@@ -5,6 +5,8 @@ import org.academiadecodigo.hackathon.runner_bros.box2d.UserData;
 import org.academiadecodigo.hackathon.runner_bros.box2d.UserDataType;
 import org.academiadecodigo.hackathon.runner_bros.gameobjects.Runner;
 
+import java.lang.reflect.Array;
+
 /**
  * Created by cadet on 30/10/15.
  */
@@ -15,15 +17,15 @@ public class BodyUtils {
 
         return userData != null && userData.getUserDataType() == UserDataType.RUNNER;
     }
-    /*
-    public static Body getRunnerBody(Body a,Body b){
 
-        if(bodyIsRunner(a)){
-            return
-        }
 
+    public static Body[] order(Body a, Body b){
+        Body[] array = new Body[2];
+        array[0] = bodyIsRunner(a) ? a : b;
+        array[1] = bodyIsRunner(a) ? b : a;
+        return array;
     }
-    */
+
 
     public static boolean bodyIsGround(Body body) {
         UserData userData = (UserData) body.getUserData();

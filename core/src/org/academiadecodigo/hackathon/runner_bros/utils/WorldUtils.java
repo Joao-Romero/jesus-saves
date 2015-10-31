@@ -2,9 +2,8 @@ package org.academiadecodigo.hackathon.runner_bros.utils;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import org.academiadecodigo.hackathon.runner_bros.box2d.GroundUserData;
-import org.academiadecodigo.hackathon.runner_bros.box2d.RunnerUserData;
-import org.academiadecodigo.hackathon.runner_bros.box2d.WallUserData;
+import org.academiadecodigo.hackathon.runner_bros.box2d.UserData;
+import org.academiadecodigo.hackathon.runner_bros.box2d.UserDataType;
 
 /**
  * Created by cadet on 30/10/15.
@@ -39,7 +38,7 @@ public class WorldUtils {
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(width / 2, height / 2);
         Fixture fixture = body.createFixture(shape, Constants.WALL_DENSITY);
-        body.setUserData(new WallUserData());
+        body.setUserData(new UserData(UserDataType.WALL));
         shape.dispose();
         return body;
     }
@@ -53,7 +52,21 @@ public class WorldUtils {
         shape.setAsBox(width / 2, height / 2);
         Fixture fixture = body.createFixture(shape, Constants.WALL_DENSITY);
         fixture.setRestitution(restituition);
-        body.setUserData(new GroundUserData());
+        body.setUserData(new UserData(UserDataType.GROUND));
+        shape.dispose();
+        return body;
+    }
+
+    public static Body createPowerUp(World world, float x, float y, float width, float height, float restituition){
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.position.set(new Vector2(x, y));
+        Body body = world.createBody(bodyDef);
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(width / 2, height / 2);
+        Fixture fixture = body.createFixture(shape, Constants.WALL_DENSITY);
+        fixture.setRestitution(restituition);
+        fixture.setSensor(true);
+        body.setUserData(new UserData(UserDataType.POWERUP));
         shape.dispose();
         return body;
     }
@@ -68,7 +81,7 @@ public class WorldUtils {
         shape.setAsBox(width / 2, height / 2);
         Fixture fixture = body.createFixture(shape, Constants.GROUND_DENSITY);
         fixture.setRestitution(restituition);
-        body.setUserData(new GroundUserData());
+        body.setUserData(new UserData(UserDataType.GROUND));
         shape.dispose();
         return body;
     }
@@ -81,7 +94,7 @@ public class WorldUtils {
         bodyDef.position.set(new Vector2(x, y));
         PolygonShape shape = new PolygonShape();
         //CircleShape shape = new CircleShape();
-        shape.setAsBox(0.5f, 0.5f, new Vector2(2, 2), 45);
+        shape.setAsBox(0.2f, 0.2f, new Vector2(2, 2), 0);
         //shape.setRadius(0.2f);
         Body body = world.createBody(bodyDef);
 
@@ -93,13 +106,15 @@ public class WorldUtils {
 
 
         body.resetMassData();
-        body.setUserData(new RunnerUserData());
+        body.setUserData(new UserData(UserDataType.RUNNER));
         shape.dispose();
 
         body.setBullet(true);
 
         return body;
     }
+
+
 
     /*public static Body createRunner(World world, float x, float y, float width, float height) {
 
