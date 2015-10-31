@@ -86,7 +86,7 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
         world = WorldUtils.createWorld();
         // Let the world now you are handling contacts
         world.setContactListener(this);
-        loadMap(3);
+        loadMap(1);
 
         //setUpGround();
         //setUpPlatforms();
@@ -112,6 +112,30 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
 
             addActor(ground);
         }
+
+        for(MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
+            Wall wall = new Wall(WorldUtils.createWall(world, (rect.getX() + rect.getWidth() / 2) / 32,
+                    (rect.getY() + rect.getHeight() / 2) / 32,
+                    rect.getWidth() / 32,
+                    rect.getHeight() / 32));
+
+            addActor(wall);
+        }
+
+        for(MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)) {
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
+            PowerUp powerUp = new PowerUp(WorldUtils.createPowerUp(world, (rect.getX() + rect.getWidth() / 2) / 32,
+                    (rect.getY() + rect.getHeight() / 2) / 32,
+                    rect.getWidth() / 32,
+                    rect.getHeight() / 32, 0));
+
+            addActor(powerUp);
+        }
+
+
     }
 
     private void setUpGround() {
@@ -222,7 +246,7 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
 
         spriteBatch.draw(sprite, runner.getBodyPositionX(), runner.getBodyPositionY(), sprite.getWidth(), sprite.getHeight());
         spriteBatch.end();
-        
+
 
     }
 
@@ -320,10 +344,12 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
             case GROUND:
                 //System.out.println(runner+" landed");
                 runner.landed();
+                System.out.println("Hit ground");
                 break;
             case WALL:
                 //System.out.println(runner +" walled");
                 runner.setNextToWall(true);
+                System.out.println("Hit wall");
                 break;
             case RUNNER:
                 //System.out.println(runner +" runned");
