@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import org.academiadecodigo.hackathon.runner_bros.Main;
 import org.academiadecodigo.hackathon.runner_bros.manager.AssetManager;
+import org.academiadecodigo.hackathon.runner_bros.manager.AudioManager;
 import org.academiadecodigo.hackathon.runner_bros.utils.Constants;
 
 /**
@@ -29,6 +30,8 @@ public class MenuScreen implements Screen {
 
     @Override
     public void show(){
+
+        Main.audioManager.playMusic(AudioManager.menuMusic);
         stage = new Stage();
         skin = AssetManager.instance.skin;
         Image logo = AssetManager.instance.menuImage;

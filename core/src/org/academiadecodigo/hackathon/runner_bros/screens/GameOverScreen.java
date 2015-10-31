@@ -6,10 +6,12 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import org.academiadecodigo.hackathon.runner_bros.Main;
 import org.academiadecodigo.hackathon.runner_bros.manager.AssetManager;
+import org.academiadecodigo.hackathon.runner_bros.manager.AudioManager;
 import org.academiadecodigo.hackathon.runner_bros.utils.Constants;
 
 /**
@@ -18,12 +20,28 @@ import org.academiadecodigo.hackathon.runner_bros.utils.Constants;
 public class GameOverScreen implements Screen {
 
     private Game game;
+    private Image image;
 
     public GameOverScreen(Game game){
         this.game = game;
     }
     @Override
     public void show() {
+        Main.audioManager.playMusic(AudioManager.gameOverMusic);
+        switch (Main.gameManager.getWinner().getType()){
+            case sonic:
+                image = AssetManager.instance.sonicWinner;
+                break;
+            case crash:
+                image = AssetManager.instance.crashWinner;
+                break;
+            case mario:
+                image = AssetManager.instance.marioWinner;
+                break;
+            case pikachu:
+                image = AssetManager.instance.pikachuWinner;
+                break;
+        }
     }
 
     @Override
@@ -38,8 +56,12 @@ public class GameOverScreen implements Screen {
         }
         Stage stage = new Stage();
         Skin skin = AssetManager.instance.skin;
+
+        image.setPosition((Constants.APP_WIDTH - image.getWidth()) / 2, (Constants.APP_HEIGHT - image.getHeight()) / 2);
+        stage.addActor(image);
+
         Label label = new Label((int)Main.gameManager.getGameTime()+" seconds",skin);
-        label.setPosition((Constants.APP_WIDTH-label.getWidth())/2,(Constants.APP_HEIGHT-label.getHeight())/2);
+        label.setPosition(50,(Constants.APP_HEIGHT-label.getHeight())/1.3f);
         stage.addActor(label);
 
         stage.draw();

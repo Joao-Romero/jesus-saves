@@ -9,6 +9,8 @@ import org.academiadecodigo.hackathon.runner_bros.gameobjects.Runner;
  * Created by cadet on 29/10/15.
  */
 public class GameManager {
+
+
     private Runner winner;
     private Boolean gameOver;
     private Game game;
@@ -16,12 +18,16 @@ public class GameManager {
     private long startTime;
     private long endTime;
 
+    private long gameTime;
+
     public long getGameTime() {
         return gameTime;
     }
 
-    private long gameTime;
 
+    public Runner getWinner() {
+        return winner;
+    }
     public GameManager(Game game){
         this.game = game;
     }

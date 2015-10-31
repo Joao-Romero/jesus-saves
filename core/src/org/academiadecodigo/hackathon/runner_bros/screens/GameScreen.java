@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import org.academiadecodigo.hackathon.runner_bros.Main;
+import org.academiadecodigo.hackathon.runner_bros.manager.AudioManager;
 import org.academiadecodigo.hackathon.runner_bros.stage.GameStage;
 
 /**
@@ -27,6 +28,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void show(){
+        Main.audioManager.playMusic(AudioManager.gameMusic);
     }
 
     @Override

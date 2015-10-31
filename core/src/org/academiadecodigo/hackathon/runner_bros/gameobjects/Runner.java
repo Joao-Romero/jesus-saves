@@ -12,6 +12,11 @@ public class Runner extends GameActor {
     private boolean jumping;
     private boolean needsVerticalImpulse;
     private boolean nextToRunner;
+    private boolean nextToWall;
+
+
+
+    private RunnerType type;
 
     public void setNextToRunner(boolean nextToRunner) {
         this.nextToRunner = nextToRunner;
@@ -34,7 +39,9 @@ public class Runner extends GameActor {
         this.nextToWall = nextToWall;
     }
 
-    private boolean nextToWall;
+    public RunnerType getType() {
+        return type;
+    }
 
     public boolean canJump(){
         if(jumping){
@@ -47,12 +54,12 @@ public class Runner extends GameActor {
     }
 
 
-    public Runner(Body body,Sprite sprite) {
+    public Runner(Body body,RunnerType runnerType,Sprite sprite) {
 
         super(body);
-
         //sprite = AssetManager.instance.runnerSprites.get(runnerType);
         this.sprite = sprite;
+        this.type = runnerType;
     }
 
 

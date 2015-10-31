@@ -1,0 +1,209 @@
+
+pack4.png
+size: 1024,128
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+crash_run1
+  rotate: false
+  xy: 539, 54
+  size: 44, 50
+  orig: 44, 50
+  offset: 0, 0
+  index: -1
+crash_run10
+  rotate: false
+  xy: 953, 54
+  size: 44, 50
+  orig: 44, 50
+  offset: 0, 0
+  index: -1
+crash_run11
+  rotate: false
+  xy: 539, 2
+  size: 44, 50
+  orig: 44, 50
+  offset: 0, 0
+  index: -1
+crash_run12
+  rotate: false
+  xy: 585, 2
+  size: 44, 50
+  orig: 44, 50
+  offset: 0, 0
+  index: -1
+crash_run13
+  rotate: false
+  xy: 631, 2
+  size: 44, 50
+  orig: 44, 50
+  offset: 0, 0
+  index: -1
+crash_run14
+  rotate: false
+  xy: 677, 2
+  size: 44, 50
+  orig: 44, 50
+  offset: 0, 0
+  index: -1
+crash_run2
+  rotate: false
+  xy: 585, 54
+  size: 44, 50
+  orig: 44, 50
+  offset: 0, 0
+  index: -1
+crash_run3
+  rotate: false
+  xy: 631, 54
+  size: 44, 50
+  orig: 44, 50
+  offset: 0, 0
+  index: -1
+crash_run4
+  rotate: false
+  xy: 677, 54
+  size: 44, 50
+  orig: 44, 50
+  offset: 0, 0
+  index: -1
+crash_run5
+  rotate: false
+  xy: 723, 54
+  size: 44, 50
+  orig: 44, 50
+  offset: 0, 0
+  index: -1
+crash_run6
+  rotate: false
+  xy: 769, 54
+  size: 44, 50
+  orig: 44, 50
+  offset: 0, 0
+  index: -1
+crash_run7
+  rotate: false
+  xy: 815, 54
+  size: 44, 50
+  orig: 44, 50
+  offset: 0, 0
+  index: -1
+crash_run8
+  rotate: false
+  xy: 861, 54
+  size: 44, 50
+  orig: 44, 50
+  offset: 0, 0
+  index: -1
+crash_run9
+  rotate: false
+  xy: 907, 54
+  size: 44, 50
+  orig: 44, 50
+  offset: 0, 0
+  index: -1
+mario_run1
+  rotate: false
+  xy: 2, 9
+  size: 57, 95
+  orig: 57, 95
+  offset: 0, 0
+  index: -1
+mario_run2
+  rotate: false
+  xy: 61, 9
+  size: 57, 95
+  orig: 57, 95
+  offset: 0, 0
+  index: -1
+mario_run3
+  rotate: false
+  xy: 120, 9
+  size: 57, 95
+  orig: 57, 95
+  offset: 0, 0
+  index: -1
+mario_run4
+  rotate: false
+  xy: 179, 9
+  size: 57, 95
+  orig: 57, 95
+  offset: 0, 0
+  index: -1
+mario_run5
+  rotate: false
+  xy: 238, 9
+  size: 57, 95
+  orig: 57, 95
+  offset: 0, 0
+  index: -1
+mario_run6
+  rotate: false
+  xy: 297, 9
+  size: 57, 95
+  orig: 57, 95
+  offset: 0, 0
+  index: -1
+mario_run7
+  rotate: false
+  xy: 356, 9
+  size: 57, 95
+  orig: 57, 95
+  offset: 0, 0
+  index: -1
+pikachu_run1
+  rotate: false
+  xy: 415, 62
+  size: 60, 42
+  orig: 60, 42
+  offset: 0, 0
+  index: -1
+pikachu_run2
+  rotate: false
+  xy: 415, 18
+  size: 60, 42
+  orig: 60, 42
+  offset: 0, 0
+  index: -1
+pikachu_run3
+  rotate: false
+  xy: 477, 62
+  size: 60, 42
+  orig: 60, 42
+  offset: 0, 0
+  index: -1
+pikachu_run4
+  rotate: false
+  xy: 477, 18
+  size: 60, 42
+  orig: 60, 42
+  offset: 0, 0
+  index: -1
+sonic_run1
+  rotate: false
+  xy: 723, 18
+  size: 34, 34
+  orig: 34, 34
+  offset: 0, 0
+  index: -1
+sonic_run2
+  rotate: false
+  xy: 759, 18
+  size: 34, 34
+  orig: 34, 34
+  offset: 0, 0
+  index: -1
+sonic_run3
+  rotate: false
+  xy: 795, 18
+  size: 34, 34
+  orig: 34, 34
+  offset: 0, 0
+  index: -1
+sonic_run4
+  rotate: false
+  xy: 831, 18
+  size: 34, 34
+  orig: 34, 34
+  offset: 0, 0
+  index: -1

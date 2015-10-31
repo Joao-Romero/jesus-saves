@@ -25,6 +25,7 @@ import org.academiadecodigo.hackathon.runner_bros.box2d.UserData;
 import org.academiadecodigo.hackathon.runner_bros.box2d.UserDataType;
 import org.academiadecodigo.hackathon.runner_bros.gameobjects.*;
 import org.academiadecodigo.hackathon.runner_bros.manager.AssetManager;
+import org.academiadecodigo.hackathon.runner_bros.manager.AudioManager;
 import org.academiadecodigo.hackathon.runner_bros.utils.BodyUtils;
 import org.academiadecodigo.hackathon.runner_bros.utils.Constants;
 import org.academiadecodigo.hackathon.runner_bros.utils.WorldUtils;
@@ -41,23 +42,19 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
 
     private SpriteBatch spriteBatch;
 
-
-    public GameStage(){
-        spriteBatch = new SpriteBatch();
-        setUpWorld();
-        setupCamera();
-        setupTouchControlAreas();
-        renderer = new Box2DDebugRenderer();
-    }
-
-
     private Sprite sprite = new Sprite(AssetManager.instance.sonic);
     private Sprite sprite2 = new Sprite(AssetManager.instance.crash);
+    private Sprite sprite3 = new Sprite(AssetManager.instance.mario);
+    private Sprite sprite4 = new Sprite(AssetManager.instance.pikachu);
     private Animation animation;
     private Animation animation2;
+    private Animation animation3;
+    private Animation animation4;
 
     private TextureRegion currentFrame;
     private TextureRegion currentFrame2;
+    private TextureRegion currentFrame3;
+    private TextureRegion currentFrame4;
 
     private float stateTime;
 
@@ -71,7 +68,7 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
     private float accumulator = 0f;
 
     private OrthographicCamera camera;
-    private Box2DDebugRenderer renderer;
+    //private Box2DDebugRenderer renderer;
 
     private Rectangle screenRightSide;
     private Rectangle screenLeftSide;
@@ -81,6 +78,14 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
     private TmxMapLoader mapLoader;
     private TiledMap map;
     private OrthogonalTiledMapRenderer mapRenderer;
+
+    public GameStage(){
+        spriteBatch = new SpriteBatch();
+        setUpWorld();
+        setupCamera();
+        setupTouchControlAreas();
+        //renderer = new Box2DDebugRenderer();
+    }
 
 
     private void setUpWorld() {
@@ -93,11 +98,17 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
 
         animation = AssetManager.instance.sonicAnimation;
         animation2 = AssetManager.instance.crashAnimation;
+        animation3 = AssetManager.instance.marioAnimation;
+        animation4 = AssetManager.instance.pikachuAnimation;
 
         sprite.setRegion(animation.getKeyFrame(0));
         sprite.setSize(1, 1);
         sprite2.setRegion(animation2.getKeyFrame(0));
         sprite2.setSize(1,1);
+        sprite3.setRegion(animation3.getKeyFrame(0));
+        sprite3.setSize(1,1);
+        sprite4.setRegion(animation4.getKeyFrame(0));
+        sprite4.setSize(1,1);
     }
 
     private void loadMap(int number) {
@@ -157,8 +168,8 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
     }
 
     private void setUpRunner() {
-        runner = new Runner(WorldUtils.createRunner(world,10f,2f,1f,1f),sprite);
-        runner2 = new Runner(WorldUtils.createRunner(world, 10f, 2f, 1f, 1f),sprite);
+        runner = new Runner(WorldUtils.createRunner(world,10f,2f,1f,1f),RunnerType.sonic,sprite);
+        runner2 = new Runner(WorldUtils.createRunner(world, 10f, 2f, 1f, 1f),RunnerType.crash,sprite);
         addActor(runner);
         addActor(runner2);
     }
@@ -217,6 +228,9 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
 
         sprite.setPosition(runner.getBody().getPosition().x + 1.6f, runner.getBody().getPosition().y + 1.6f);
         sprite2.setPosition(runner2.getBody().getPosition().x + 1.6f, runner2.getBody().getPosition().y + 1.6f);
+        //sprite3.setPosition(runner3.getBody().getPosition().x + 1.6f, runner3.getBody().getPosition().y + 1.6f);
+        //sprite4.setPosition(runner4.getBody().getPosition().x + 1.6f, runner4.getBody().getPosition().y + 1.6f);
+
 
 
 
@@ -240,18 +254,24 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
 
         mapRenderer.setView(camera);
         mapRenderer.render();
-        renderer.render(world, camera.combined);
+        //renderer.render(world, camera.combined);
 
         spriteBatch.setProjectionMatrix(camera.combined);
         spriteBatch.begin();
         stateTime+=Gdx.graphics.getDeltaTime();
         currentFrame = animation.getKeyFrame(stateTime,true);
         currentFrame2 = animation2.getKeyFrame(stateTime,true);
+        //currentFrame3 = animation3.getKeyFrame(stateTime,true);
+        //currentFrame4 = animation4.getKeyFrame(stateTime,true);
+
         sprite.setRegion(currentFrame);
         sprite2.setRegion(currentFrame2);
-        //spriteBatch.draw(sprite, runner.getBodyPositionX(), runner.getBodyPositionY(), sprite.getWidth(), sprite.getHeight());
+        //sprite3.setRegion(currentFrame3);
+        //sprite4.setRegion(currentFrame4);
         sprite.draw(spriteBatch);
         sprite2.draw(spriteBatch);
+        //sprite3.draw(spriteBatch);
+        //sprite4.draw(spriteBatch);
         spriteBatch.end();
 
 
@@ -357,6 +377,7 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
                 System.out.println("powered");
                 getFrontRunner().getBody().applyLinearImpulse(new Vector2(-2.5f, 0f), runner.getBody().getWorldCenter(), true);
                 getOtherRunner(getFrontRunner()).getBody().applyLinearImpulse(new Vector2(1f, 1f), runner.getBody().getWorldCenter(), true);
+                Main.audioManager.playSound(AudioManager.powerUp);
                 break;
             case FINISHLINE:
                 Main.gameManager.setWinner(runner);
