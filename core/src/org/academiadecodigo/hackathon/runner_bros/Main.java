@@ -6,8 +6,8 @@ import org.academiadecodigo.hackathon.runner_bros.manager.GameManager;
 import org.academiadecodigo.hackathon.runner_bros.screens.GameOverScreen;
 import org.academiadecodigo.hackathon.runner_bros.screens.GameScreen;
 import org.academiadecodigo.hackathon.runner_bros.screens.MenuScreen;
-import com.esotericsoftware.kryo.Kryo;
-import com.esotericsoftware.kryonet.Client;
+//import com.esotericsoftware.kryo.Kryo;
+//import com.esotericsoftware.kryonet.Client;
 
 /**
  * Created by cadet on 29/10/15.
@@ -25,8 +25,8 @@ public class Main extends Game{
         Main.audioManager.init();
 
         gameManager = new GameManager(this);
-        menuScreen = new MenuScreen(this);
-        gameScreen = new GameScreen(this);
+        menuScreen = new MenuScreen();
+        gameScreen = new GameScreen();
         gameOverScreen = new GameOverScreen(this);
         setScreen(menuScreen);
     }

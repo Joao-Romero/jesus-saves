@@ -41,6 +41,8 @@ public class GameOverScreen implements Screen {
             case pikachu:
                 image = AssetManager.instance.pikachuWinner;
                 break;
+            default:
+                break;
         }
     }
 
@@ -50,7 +52,7 @@ public class GameOverScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.R) || Gdx.input.isTouched()) {
-            Main.gameScreen = new GameScreen(game);
+            Main.gameScreen = new GameScreen();
             game.setScreen(Main.gameScreen);
             Gdx.input.setInputProcessor(Main.gameScreen.getStage());
         }

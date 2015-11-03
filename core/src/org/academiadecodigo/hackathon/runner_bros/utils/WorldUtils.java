@@ -14,21 +14,6 @@ public class WorldUtils {
         return new World(Constants.WORLD_GRAVITY, true);
     }
 
-   /* public static Body createGround(World world) {
-
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.position.set(new Vector2(Constants.GROUND_X, Constants.GROUND_Y));
-
-        Body body = world.createBody(bodyDef);
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(Constants.GROUND_WIDTH / 2, Constants.GROUND_HEIGHT / 2);
-        Fixture fixture = body.createFixture(shape, Constants.GROUND_DENSITY);
-        //fixture.setRestitution(0.4f);
-        //fixture.setFriction(8f);
-        body.setUserData(new GroundUserData());
-        shape.dispose();
-        return body;
-    }*/
 
     public static Body createWall(World world, float x, float y, float width, float height) {
 
@@ -37,7 +22,7 @@ public class WorldUtils {
         Body body = world.createBody(bodyDef);
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(width / 2, height / 2);
-        Fixture fixture = body.createFixture(shape, Constants.WALL_DENSITY);
+        body.createFixture(shape, Constants.WALL_DENSITY);
         body.setUserData(new UserData(UserDataType.WALL));
         shape.dispose();
         return body;
@@ -127,32 +112,6 @@ public class WorldUtils {
 
         return body;
     }
-
-
-
-    /*public static Body createRunner(World world, float x, float y, float width, float height) {
-
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(new Vector2(x, y));
-        Body body = world.createBody(bodyDef);
-
-        FixtureDef fixtureDef = new FixtureDef();
-        CircleShape shape = new CircleShape();
-        shape.setRadius(1f);
-        fixtureDef.shape = shape;
-        body.createFixture(fixtureDef);
-
-
-
-        body.setGravityScale(Constants.RUNNER_GRAVITY_SCALE);
-        body.createFixture(shape, Constants.RUNNER_DENSITY);
-
-        body.resetMassData();
-        body.setUserData(new RunnerUserData());
-        shape.dispose();
-        return body;
-    }*/
 
 
 

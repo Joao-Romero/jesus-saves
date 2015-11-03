@@ -3,9 +3,7 @@ package org.academiadecodigo.hackathon.runner_bros.utils;
 import com.badlogic.gdx.physics.box2d.Body;
 import org.academiadecodigo.hackathon.runner_bros.box2d.UserData;
 import org.academiadecodigo.hackathon.runner_bros.box2d.UserDataType;
-import org.academiadecodigo.hackathon.runner_bros.gameobjects.Runner;
 
-import java.lang.reflect.Array;
 
 /**
  * Created by cadet on 30/10/15.

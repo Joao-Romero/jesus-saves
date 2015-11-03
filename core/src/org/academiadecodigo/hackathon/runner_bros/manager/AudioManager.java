@@ -15,9 +15,6 @@ public class AudioManager {
     public static Sound powerUp;
     public final boolean ON = false;
 
-    public AudioManager() {
-    }
-
     public void init() {
         //load sounds
         powerUp = loadSound("sounds/powerUp.mp3");

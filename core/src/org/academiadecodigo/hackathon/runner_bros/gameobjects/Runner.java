@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
-import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
 import org.academiadecodigo.hackathon.runner_bros.manager.AssetManager;
 
 /**
@@ -63,9 +62,6 @@ public class Runner extends GameActor {
     }
 
     public boolean canJump(){
-        if(jumping){
-
-        }
         //System.out.println(this+" "+ jumping);
         //System.out.println(this+" "+ nextToWall);
         //System.out.println(this+" "+ nextToRunner);

@@ -1,6 +1,6 @@
 package org.academiadecodigo.hackathon.runner_bros.screens;
 
-import com.badlogic.gdx.Game;
+//import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -13,16 +13,16 @@ import org.academiadecodigo.hackathon.runner_bros.stage.GameStage;
  */
 public class GameScreen implements Screen {
     private GameStage stage;
-    private Game game;
+    //private Game game;
 
     public GameStage getStage() {
         return stage;
     }
 
 
-    public GameScreen(Game game) {
+    /*public GameScreen(Game game) {
         this.game = game;
-    }
+    }*/
 
     @Override
     public void show(){

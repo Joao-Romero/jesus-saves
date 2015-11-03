@@ -13,10 +13,10 @@ public class GameManager {
 
 
     private Runner winner;
-    private Boolean gameOver;
+    //private Boolean gameOver;
     private Game game;
     private long startTime;
-    private long endTime;
+    //private long endTime;
     private long gameTime;
 
     private RunnerType runnerType;
@@ -37,26 +37,28 @@ public class GameManager {
     public Runner getWinner() {
         return winner;
     }
-    public GameManager(Game game){
+
+    public GameManager(Game game) {
         this.game = game;
     }
+
     public void setWinner(Runner winner) {
-            endTimer();
-            this.winner = winner;
-            this.gameOver = true;
-            setScreen(Main.gameOverScreen);
+        endTimer();
+        this.winner = winner;
+        //this.gameOver = true;
+        setScreen(Main.gameOverScreen);
     }
 
-    public void startTimer(){
+    public void startTimer() {
         startTime = System.currentTimeMillis();
     }
 
-    public void endTimer(){
-        endTime = System.currentTimeMillis();
-        gameTime = (endTime - startTime)/1000;
+    public void endTimer() {
+        Long endTime = System.currentTimeMillis();
+        gameTime = (endTime - startTime) / 1000;
     }
 
-    public void setRunners(RunnerType runnerType,RunnerType runner2Type){
+    public void setRunners(RunnerType runnerType, RunnerType runner2Type) {
         this.runnerType = runnerType;
         this.runner2Type = runner2Type;
     }

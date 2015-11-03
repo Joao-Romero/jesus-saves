@@ -11,8 +11,8 @@ public class Constants {
     public static final int APP_WIDTH = Gdx.graphics.getWidth();
     public static final int APP_HEIGHT = Gdx.graphics.getHeight();
 
-    private static final int VIEWPORT_WIDTH = 20;
-    private static final int VIEWPORT_HEIGHT = 13;
+    public static final int VIEWPORT_WIDTH = 20;
+    public static final int VIEWPORT_HEIGHT = 13;
 
     public static final Vector2 WORLD_GRAVITY = new Vector2(0, -9.8f);
 

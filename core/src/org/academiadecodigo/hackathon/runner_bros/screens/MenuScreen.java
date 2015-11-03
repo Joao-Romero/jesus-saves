@@ -1,6 +1,6 @@
 package org.academiadecodigo.hackathon.runner_bros.screens;
 
-import com.badlogic.gdx.Game;
+//import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -15,11 +15,9 @@ import org.academiadecodigo.hackathon.runner_bros.Main;
 import org.academiadecodigo.hackathon.runner_bros.gameobjects.RunnerType;
 import org.academiadecodigo.hackathon.runner_bros.manager.AssetManager;
 import org.academiadecodigo.hackathon.runner_bros.manager.AudioManager;
-import org.academiadecodigo.hackathon.runner_bros.manager.GameManager;
 import org.academiadecodigo.hackathon.runner_bros.utils.Constants;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * Created by cadet on 29/10/15.
@@ -27,27 +25,24 @@ import java.util.Iterator;
 public class MenuScreen implements Screen {
 
     private Stage stage;
-    private Skin skin;
-    private Game game;
+    //private Skin skin;
+    //private Game game;
     private VerticalGroup verticalGroup;
     private CheckBoxListener checkBoxListener;
 
-    private static ArrayList<CheckBox> checked;
+    private static ArrayList<CheckBox> checked = new ArrayList(4);
 
-    public MenuScreen(Game game) {
+    /*public MenuScreen(Game game) {
         super();
         this.game = game;
-    }
+    }*/
 
     @Override
     public void show(){
 
-
-
         Main.audioManager.playMusic(AudioManager.menuMusic);
         stage = new Stage();
-        skin = AssetManager.instance.skin;
-        //characters = new SelectBox<String>(skin);
+        Skin skin = AssetManager.instance.skin;
 
         Image logo = AssetManager.instance.menuImage;
         logo.setPosition((Constants.APP_WIDTH - logo.getWidth()) / 2, (Constants.APP_HEIGHT - logo.getHeight()) / 2);
@@ -64,28 +59,12 @@ public class MenuScreen implements Screen {
             checkBox.setSize(200, 40);
             checkBox.align(Align.left);
             checkBox.addListener(checkBoxListener);
-            /*
-            checkBox.addListener(new InputListener(){
-                public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                    System.out.println("c");
-                }
-                public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                    System.out.println("d");
-                    return true;
-                }
-            });
-            */
+
             verticalGroup.addActor(checkBox);
-            //checkBox.setChecked(runnerType.equals(RunnerType.sonic) || runnerType.equals(RunnerType.crash) ? true:false);
         }
         verticalGroup.setPosition(100,200);
         stage.addActor(verticalGroup);
-        /*
-        characters.setItems("sonic","crash","mario","pickachu");
-        characters.setPosition(100,200);
-        characters.setSize(150,40);
-        stage.addActor(characters);
-        */
+
 
         Gdx.input.setInputProcessor(stage);
 
@@ -143,9 +122,9 @@ public class MenuScreen implements Screen {
     }
 
     public class CheckBoxListener extends InputListener{
-        public CheckBoxListener(){
+        /*public CheckBoxListener(){
             checked = new ArrayList(4);
-        }
+        }*/
 
         public void touchUp(InputEvent event,float x,float y,int pointer,int button){
             System.out.println("c");
@@ -179,17 +158,6 @@ public class MenuScreen implements Screen {
                 }
                 numberChecked += tempCheckBox.isChecked()? 1:0;
             }
-            /*
-            if(numberChecked <2){
-                return true;
-            }
-
-            if(checked.contains(checkBox)){
-                //checkBox.toggle();
-            } else {
-                checked.get(0).setChecked(false);
-            }
-            */
 
             if(numberChecked == 2 && !checked.contains(checkBox)){
                 checked.get(0).setChecked(false);
