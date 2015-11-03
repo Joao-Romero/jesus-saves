@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
 import org.academiadecodigo.hackathon.runner_bros.Main;
 import org.academiadecodigo.hackathon.runner_bros.gameobjects.Runner;
+import org.academiadecodigo.hackathon.runner_bros.gameobjects.RunnerType;
 
 /**
  * Created by cadet on 29/10/15.
@@ -17,6 +18,17 @@ public class GameManager {
     private long startTime;
     private long endTime;
     private long gameTime;
+
+    private RunnerType runnerType;
+    private RunnerType runner2Type;
+
+    public RunnerType getRunnerType() {
+        return runnerType;
+    }
+
+    public RunnerType getRunner2Type() {
+        return runner2Type;
+    }
 
     public long getGameTime() {
         return gameTime;
@@ -42,6 +54,11 @@ public class GameManager {
     public void endTimer(){
         endTime = System.currentTimeMillis();
         gameTime = (endTime - startTime)/1000;
+    }
+
+    public void setRunners(RunnerType runnerType,RunnerType runner2Type){
+        this.runnerType = runnerType;
+        this.runner2Type = runner2Type;
     }
 
     public void setScreen(Screen screen) {

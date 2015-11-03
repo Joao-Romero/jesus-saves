@@ -1,8 +1,11 @@
 package org.academiadecodigo.hackathon.runner_bros.gameobjects;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
 import net.dermetfan.gdx.graphics.g2d.Box2DSprite;
+import org.academiadecodigo.hackathon.runner_bros.manager.AssetManager;
 
 /**
  * Created by cadet on 30/10/15.
@@ -15,8 +18,24 @@ public class Runner extends GameActor {
     private boolean nextToWall;
 
 
+    private Animation animation;
+    private Sprite sprite;
 
     private RunnerType type;
+
+    public Runner(Body body,RunnerType runnerType) {
+        super(body);
+        this.type = runnerType;
+        this.sprite = new Sprite(AssetManager.instance.regions.get(runnerType));
+        this.sprite.setSize(1,1);
+        this.sprite.setPosition(getBody().getPosition().x + 1.6f, getBody().getPosition().y + 1.6f);
+        this.animation = AssetManager.instance.animations.get(runnerType);
+
+    }
+
+    public Animation getAnimation() {
+        return animation;
+    }
 
     public void setNextToRunner(boolean nextToRunner) {
         this.nextToRunner = nextToRunner;
@@ -54,11 +73,11 @@ public class Runner extends GameActor {
     }
 
 
-    public Runner(Body body,RunnerType runnerType,Sprite sprite) {
-
-        super(body);
-        this.sprite = sprite;
-        this.type = runnerType;
+    public Sprite getSpriteFrame(float stateTime,boolean looping){
+        TextureRegion currentFrame = animation.getKeyFrame(stateTime, looping);
+        sprite.setRegion(currentFrame);
+        sprite.setPosition(getBody().getPosition().x + 1.6f, getBody().getPosition().y + 1.6f);
+        return sprite;
     }
 
 
@@ -71,7 +90,6 @@ public class Runner extends GameActor {
     public float getBodyPositionX(){
         return body.getPosition().x;
     }
-
 
 
     public float getBodyPositionY(){

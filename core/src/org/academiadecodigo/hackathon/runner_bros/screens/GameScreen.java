@@ -21,14 +21,14 @@ public class GameScreen implements Screen {
 
 
     public GameScreen(Game game) {
-        stage = new GameStage();
         this.game = game;
-        Main.gameManager.startTimer();
     }
 
     @Override
     public void show(){
         Main.audioManager.playMusic(AudioManager.gameMusic);
+        stage = new GameStage();
+        Main.gameManager.startTimer();
     }
 
     @Override

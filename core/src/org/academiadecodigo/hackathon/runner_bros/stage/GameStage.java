@@ -26,6 +26,8 @@ import org.academiadecodigo.hackathon.runner_bros.box2d.UserDataType;
 import org.academiadecodigo.hackathon.runner_bros.gameobjects.*;
 import org.academiadecodigo.hackathon.runner_bros.manager.AssetManager;
 import org.academiadecodigo.hackathon.runner_bros.manager.AudioManager;
+import org.academiadecodigo.hackathon.runner_bros.manager.GameManager;
+import org.academiadecodigo.hackathon.runner_bros.screens.MenuScreen;
 import org.academiadecodigo.hackathon.runner_bros.utils.BodyUtils;
 import org.academiadecodigo.hackathon.runner_bros.utils.Constants;
 import org.academiadecodigo.hackathon.runner_bros.utils.WorldUtils;
@@ -41,20 +43,6 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
     private static final int VIEWPORT_HEIGHT = 13;
 
     private SpriteBatch spriteBatch;
-
-    private Sprite sprite = new Sprite(AssetManager.instance.sonic);
-    private Sprite sprite2 = new Sprite(AssetManager.instance.crash);
-    private Sprite sprite3 = new Sprite(AssetManager.instance.mario);
-    private Sprite sprite4 = new Sprite(AssetManager.instance.pikachu);
-    private Animation animation;
-    private Animation animation2;
-    private Animation animation3;
-    private Animation animation4;
-
-    private TextureRegion currentFrame;
-    private TextureRegion currentFrame2;
-    private TextureRegion currentFrame3;
-    private TextureRegion currentFrame4;
 
     private float stateTime;
 
@@ -95,19 +83,22 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
 
         setUpRunner();
 
-        animation = AssetManager.instance.sonicAnimation;
-        animation2 = AssetManager.instance.crashAnimation;
-        animation3 = AssetManager.instance.marioAnimation;
-        animation4 = AssetManager.instance.pikachuAnimation;
+        //animation = AssetManager.instance.animations.get(RunnerType.sonic);
+        //animation2 = AssetManager.instance.animations.get(RunnerType.crash);
 
-        sprite.setRegion(animation.getKeyFrame(0));
-        sprite.setSize(1, 1);
-        sprite2.setRegion(animation2.getKeyFrame(0));
-        sprite2.setSize(1,1);
-        sprite3.setRegion(animation3.getKeyFrame(0));
-        sprite3.setSize(1,1);
-        sprite4.setRegion(animation4.getKeyFrame(0));
-        sprite4.setSize(1,1);
+        //animation = runner.getAnimation();
+        //animation2 = runner2.getAnimation();
+        //animation3 = AssetManager.instance.animations.get(RunnerType.mario);
+        //animation4 = AssetManager.instance.animations.get(RunnerType.pikachu);
+
+        //sprite.setRegion(animation.getKeyFrame(0));
+        //sprite.setSize(1, 1);
+        //sprite2.setRegion(animation2.getKeyFrame(0));
+        //sprite2.setSize(1,1);
+        //sprite3.setRegion(animation3.getKeyFrame(0));
+        //sprite3.setSize(1,1);
+        //sprite4.setRegion(animation4.getKeyFrame(0));
+        //sprite4.setSize(1,1);
     }
 
     private void loadMap(int number) {
@@ -167,8 +158,10 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
     }
 
     private void setUpRunner() {
-        runner = new Runner(WorldUtils.createRunner(world,10f,2f,1f,1f),RunnerType.sonic,sprite);
-        runner2 = new Runner(WorldUtils.createRunner(world, 10f, 2f, 1f, 1f),RunnerType.crash,sprite);
+        runner = new Runner(WorldUtils.createRunner(world,10f,2f,1f,1f),Main.gameManager.getRunnerType());
+        runner2 = new Runner(WorldUtils.createRunner(world, 10f, 2f, 1f, 1f),Main.gameManager.getRunner2Type());
+        //runner = new Runner(WorldUtils.createRunner(world,10f,2f,1f,1f),RunnerType.mario,sprite3);
+        //runner2 = new Runner(WorldUtils.createRunner(world, 10f, 2f, 1f, 1f),RunnerType.pikachu,sprite4);
         addActor(runner);
         addActor(runner2);
     }
@@ -225,14 +218,12 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
         camera.position.set(frontRunner.getBodyPositionX() + 3, 6.5f, 0f);
         camera.update();
 
-        sprite.setPosition(runner.getBody().getPosition().x + 1.6f, runner.getBody().getPosition().y + 1.6f);
-        sprite2.setPosition(runner2.getBody().getPosition().x + 1.6f, runner2.getBody().getPosition().y + 1.6f);
+        //runner.updateSpritePosition();
+        //runner2.updateSpritePosition();
+        //sprite.setPosition(runner.getBody().getPosition().x + 1.6f, runner.getBody().getPosition().y + 1.6f);
+        //sprite2.setPosition(runner2.getBody().getPosition().x + 1.6f, runner2.getBody().getPosition().y + 1.6f);
         //sprite3.setPosition(runner3.getBody().getPosition().x + 1.6f, runner3.getBody().getPosition().y + 1.6f);
         //sprite4.setPosition(runner4.getBody().getPosition().x + 1.6f, runner4.getBody().getPosition().y + 1.6f);
-
-
-
-
         for(Actor actor:getActors()){
             if(!(actor instanceof Runner)){
                 continue;
@@ -258,19 +249,22 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
         spriteBatch.setProjectionMatrix(camera.combined);
         spriteBatch.begin();
         stateTime+=Gdx.graphics.getDeltaTime();
-        currentFrame = animation.getKeyFrame(stateTime,true);
-        currentFrame2 = animation2.getKeyFrame(stateTime,true);
+        //currentFrame = animation.getKeyFrame(stateTime,true);
+        //currentFrame2 = animation2.getKeyFrame(stateTime,true);
         //currentFrame3 = animation3.getKeyFrame(stateTime,true);
         //currentFrame4 = animation4.getKeyFrame(stateTime,true);
 
-        sprite.setRegion(currentFrame);
-        sprite2.setRegion(currentFrame2);
+        //sprite.setRegion(currentFrame);
+        //sprite2.setRegion(currentFrame2);
         //sprite3.setRegion(currentFrame3);
         //sprite4.setRegion(currentFrame4);
-        sprite.draw(spriteBatch);
-        sprite2.draw(spriteBatch);
+        //sprite.draw(spriteBatch);
+        //sprite2.draw(spriteBatch);
         //sprite3.draw(spriteBatch);
         //sprite4.draw(spriteBatch);
+        (runner.getSpriteFrame(stateTime,true)).draw(spriteBatch);
+        (runner2.getSpriteFrame(stateTime,true)).draw(spriteBatch);
+
         spriteBatch.end();
 
 

@@ -13,8 +13,7 @@ public class AudioManager {
     public static Music gameOverMusic;
     private Music[] musics;
     public static Sound powerUp;
-
-    public static final AudioManager instance = new AudioManager();
+    public final boolean ON = false;
 
     public AudioManager() {
     }
@@ -51,7 +50,10 @@ public class AudioManager {
     }
 
     public void playSound(Sound sound) {
-        sound.play(0.5f);
+        if(ON){
+            sound.play(0.5f);
+        }
+
     }
 
     public void playMusic(Music music){
@@ -60,7 +62,10 @@ public class AudioManager {
                 m.stop();
             }
         }
-        music.setLooping(true);
-        music.play();
+        if(ON){
+            music.setLooping(true);
+            music.play();
+        }
+
     }
 }
