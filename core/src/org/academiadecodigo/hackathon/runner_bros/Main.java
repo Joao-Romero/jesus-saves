@@ -22,9 +22,6 @@ public class Main extends Game{
     @Override
     public void create() {
         System.out.println("test");
-        audioManager = new AudioManager();
-        Main.audioManager.init();
-
         gameManager = new GameManager(this);
         menuScreen = new MenuScreen();
         gameScreen = new GameScreen();

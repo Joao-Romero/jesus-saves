@@ -16,6 +16,7 @@ import org.academiadecodigo.hackathon.runner_bros.box2d.UserData;
 import org.academiadecodigo.hackathon.runner_bros.box2d.UserDataType;
 import org.academiadecodigo.hackathon.runner_bros.gameobjects.Runner;
 import org.academiadecodigo.hackathon.runner_bros.gameobjects.RunnerState;
+import org.academiadecodigo.hackathon.runner_bros.gameobjects.RunnerType;
 import org.academiadecodigo.hackathon.runner_bros.manager.AudioManager;
 import org.academiadecodigo.hackathon.runner_bros.utils.BodyUtils;
 import org.academiadecodigo.hackathon.runner_bros.utils.Constants;
@@ -33,6 +34,7 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
     private Runner runner;
     private Runner runner2;
 
+    private RunnerType lastAttackingRunnerType;
 
     private final float TIME_STEP = 1 / 300f;
     private float accumulator = 0f;
@@ -119,16 +121,43 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
         float impulseX = 0f;
         float impulseY = 0f;
 
+        final float damageRadius = 0.5f;
+
         Runner currentRunner = null;
+        RunnerState runnerState = RunnerState.STAND;
 
         switch (key) {
             case Input.Keys.A:
                 currentRunner = runner;
                 impulseX = -2f;
                 break;
+            case Input.Keys.W:
+                currentRunner = runner;
+                runnerState = RunnerState.KICK;
+                lastAttackingRunnerType = currentRunner.getType();
+                currentRunner.changeBox(damageRadius);
+                break;
+            case Input.Keys.S:
+                runnerState = RunnerState.PUNCH;
+                currentRunner = runner;
+                lastAttackingRunnerType = currentRunner.getType();
+                currentRunner.changeBox(damageRadius);
+                break;
             case Input.Keys.D:
                 currentRunner = runner;
                 impulseX = 2f;
+                break;
+            case Input.Keys.UP:
+                currentRunner = runner2;
+                runnerState = RunnerState.KICK;
+                lastAttackingRunnerType = currentRunner.getType();
+                currentRunner.changeBox(damageRadius);
+                break;
+            case Input.Keys.DOWN:
+                currentRunner = runner2;
+                runnerState = RunnerState.PUNCH;
+                currentRunner.changeBox(damageRadius);
+                lastAttackingRunnerType = currentRunner.getType();
                 break;
             case Input.Keys.LEFT:
                 currentRunner = runner2;
@@ -140,10 +169,11 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
                 break;
             default:
                 currentRunner = runner;
+                runnerState = RunnerState.STOPPED;
                 break;
 
         }
-
+        currentRunner.setRunnerState(runnerState);
         currentRunner.getBody().applyLinearImpulse(new Vector2(impulseX,impulseY),currentRunner.getBody().getWorldCenter(),true);
         return true;
     }
@@ -153,7 +183,17 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
         switch (key){
             case Input.Keys.D:
             case Input.Keys.A:
+            case Input.Keys.S:
+            case Input.Keys.W:
                 runner.setRunnerState(RunnerState.STOPPED);
+                runner.changeBox(0f);
+                break;
+            case Input.Keys.UP:
+            case Input.Keys.DOWN:
+            case Input.Keys.LEFT:
+            case Input.Keys.RIGHT:
+                runner2.setRunnerState(RunnerState.STOPPED);
+                runner2.changeBox(0f);
                 break;
         }
         return true;
@@ -180,6 +220,20 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
 
     @Override
     public void beginContact(Contact contact) {
+        Body a = contact.getFixtureA().getBody();
+        Body b = contact.getFixtureB().getBody();
+
+        Runner runner = getRunnerFromBody(a);
+        Runner otherRunner = getRunnerFromBody(b);
+
+        if (runner == null || otherRunner == null) {
+            return;
+        }
+
+        //System.out.println(runner.getType() + " " + runner.getRunnerState());
+        //System.out.println(otherRunner.getType() + " " + otherRunner.getRunnerState());
+        //System.out.println(lastAttackingRunnerType);
+
 
     }
 

@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.utils.Scaling;
 import org.academiadecodigo.hackathon.runner_bros.gameobjects.RunnerState;
 import org.academiadecodigo.hackathon.runner_bros.gameobjects.RunnerType;
 import org.academiadecodigo.hackathon.runner_bros.utils.Constants;
@@ -21,7 +20,7 @@ public class AssetManager {
 
     public static final AssetManager instance = new AssetManager();
     public Skin skin;
-    public Image menuImage;
+    public Image logoImage;
     public Image bgImage;
     public Image sonicWinner;
 
@@ -36,8 +35,12 @@ public class AssetManager {
 
         skin = new Skin(Gdx.files.internal("data/uiskin.json"));
 
-        menuImage = new Image(new Texture(Gdx.files.internal("images/logo.png")));
-        bgImage = new Image(new Texture(Gdx.files.internal("images/bg/background.png")));
+        logoImage = new Image(new Texture(Gdx.files.internal("images/screens/logo.jpg")));
+        bgImage = new Image(new Texture(Gdx.files.internal("images/screens/background.png")));
+
+
+        logoImage.setWidth(Constants.APP_WIDTH);
+        logoImage.setHeight(Constants.APP_HEIGHT);
         bgImage.setWidth(Constants.APP_WIDTH);
         bgImage.setHeight(Constants.APP_HEIGHT);
 

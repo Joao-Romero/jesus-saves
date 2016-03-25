@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import org.academiadecodigo.hackathon.runner_bros.Main;
 import org.academiadecodigo.hackathon.runner_bros.manager.AssetManager;
 import org.academiadecodigo.hackathon.runner_bros.manager.AudioManager;
+import org.academiadecodigo.hackathon.runner_bros.manager.SOUND;
 import org.academiadecodigo.hackathon.runner_bros.stage.GameStage;
 import org.academiadecodigo.hackathon.runner_bros.utils.Constants;
 
@@ -25,7 +26,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void show(){
-        Main.audioManager.playMusic(AudioManager.gameMusic);
+        AudioManager.instance.playMusic(SOUND.GAME);
         stage = new GameStage();
         Main.gameManager.startTimer();
         bgImage = AssetManager.instance.bgImage;

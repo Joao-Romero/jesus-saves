@@ -14,6 +14,7 @@ import org.academiadecodigo.hackathon.runner_bros.Main;
 import org.academiadecodigo.hackathon.runner_bros.gameobjects.RunnerType;
 import org.academiadecodigo.hackathon.runner_bros.manager.AssetManager;
 import org.academiadecodigo.hackathon.runner_bros.manager.AudioManager;
+import org.academiadecodigo.hackathon.runner_bros.manager.SOUND;
 import org.academiadecodigo.hackathon.runner_bros.utils.Constants;
 
 import java.util.ArrayList;
@@ -35,11 +36,11 @@ public class MenuScreen implements Screen {
     @Override
     public void show(){
 
-        Main.audioManager.playMusic(AudioManager.menuMusic);
+        AudioManager.instance.playMusic(SOUND.MENU);
         stage = new Stage();
         Skin skin = AssetManager.instance.skin;
 
-        Image logo = AssetManager.instance.menuImage;
+        Image logo = AssetManager.instance.logoImage;
         logo.setPosition((Constants.APP_WIDTH - logo.getWidth()) / 2, (Constants.APP_HEIGHT - logo.getHeight()) / 2);
 
         stage.addActor(logo);
@@ -64,7 +65,7 @@ public class MenuScreen implements Screen {
 
         //verticalGroup.addActor(pressQ);
         //verticalGroup.addActor(pressK);
-        verticalGroup.setPosition(400,250);
+        verticalGroup.setPosition(420,200);
         stage.addActor(verticalGroup);
 
 

@@ -15,4 +15,9 @@ public enum RunnerState {
     public int getFrames() {
         return frames;
     }
+
+    public boolean isAttack(){
+        return this.equals(FINAL) || this.equals(KICK) || this.equals(PUNCH);
+    }
+
 }

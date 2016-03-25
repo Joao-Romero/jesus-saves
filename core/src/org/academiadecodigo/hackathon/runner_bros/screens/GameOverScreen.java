@@ -27,7 +27,7 @@ public class GameOverScreen implements Screen {
     }
     @Override
     public void show() {
-        Main.audioManager.playMusic(AudioManager.gameOverMusic);
+        //Main.audioManager.playMusic(AudioManager.);
         switch (Main.gameManager.getWinner().getType()){
             case CHAMBEL:
                 image = AssetManager.instance.sonicWinner;

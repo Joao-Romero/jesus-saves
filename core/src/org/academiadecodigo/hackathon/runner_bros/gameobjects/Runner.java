@@ -8,6 +8,8 @@ import com.badlogic.gdx.physics.box2d.*;
 import org.academiadecodigo.hackathon.runner_bros.box2d.UserData;
 import org.academiadecodigo.hackathon.runner_bros.box2d.UserDataType;
 import org.academiadecodigo.hackathon.runner_bros.manager.AssetManager;
+import org.academiadecodigo.hackathon.runner_bros.manager.AudioManager;
+import org.academiadecodigo.hackathon.runner_bros.manager.SOUND;
 import org.academiadecodigo.hackathon.runner_bros.utils.Constants;
 
 import java.util.HashMap;
@@ -21,6 +23,8 @@ public class Runner extends GameActor {
     private boolean needsVerticalImpulse;
     private boolean nextToRunner;
     private boolean nextToWall;
+
+    private float life = 100f;
 
     private RunnerState runnerState;
 
@@ -98,8 +102,23 @@ public class Runner extends GameActor {
         return !jumping || nextToWall || nextToRunner ? true:false;
     }
 
+    public RunnerState getRunnerState() {
+        return runnerState;
+    }
+
+
+    public void changeBox(float value){
+        Shape shape = body.getFixtureList().get(0).getShape();
+        shape.setRadius(value);
+    }
+
 
     public Sprite getSpriteFrame(float stateTime,boolean looping){
+
+        if(animation == null || animation.get(runnerState) == null){
+            System.out.println("test");
+        }
+
         TextureRegion currentFrame = animation.get(runnerState).getKeyFrame(stateTime, looping);
 
         /*
@@ -114,6 +133,15 @@ public class Runner extends GameActor {
 
     public void setRunnerState(RunnerState runnerState) {
         this.runnerState = runnerState;
+
+        switch (runnerState){
+            case PUNCH:
+                AudioManager.instance.playSound(SOUND.PUNCH);
+                break;
+            case KICK:
+                AudioManager.instance.playSound(SOUND.KICK);
+                break;
+        }
     }
 
     public void landed() {
