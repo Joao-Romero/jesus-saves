@@ -4,7 +4,7 @@ package org.academiadecodigo.hackathon.runner_bros.gameobjects;
  * Created by cadet on 30/10/15.
  */
 public enum RunnerType {
-    sonic,crash,mario,pikachu;
+    CHAMBEL,ROMERO;
 
     public static RunnerType getByName(String name){
         for(RunnerType runnerType:RunnerType.values()){

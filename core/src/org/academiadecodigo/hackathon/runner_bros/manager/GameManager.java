@@ -11,23 +11,28 @@ import org.academiadecodigo.hackathon.runner_bros.gameobjects.RunnerType;
  */
 public class GameManager {
 
-
     private Runner winner;
-    //private Boolean gameOver;
     private Game game;
     private long startTime;
-    //private long endTime;
     private long gameTime;
 
     private RunnerType runnerType;
-    private RunnerType runner2Type;
+    private RunnerType runnerType2;
 
     public RunnerType getRunnerType() {
         return runnerType;
     }
 
-    public RunnerType getRunner2Type() {
-        return runner2Type;
+    public void setRunnerType(RunnerType runnerType) {
+        this.runnerType = runnerType;
+    }
+
+    public RunnerType getRunnerType2() {
+        return runnerType2;
+    }
+
+    public void setRunnerType2(RunnerType runnerType2) {
+        this.runnerType2 = runnerType2;
     }
 
     public long getGameTime() {
@@ -58,10 +63,7 @@ public class GameManager {
         gameTime = (endTime - startTime) / 1000;
     }
 
-    public void setRunners(RunnerType runnerType, RunnerType runner2Type) {
-        this.runnerType = runnerType;
-        this.runner2Type = runner2Type;
-    }
+
 
     public void setScreen(Screen screen) {
         game.setScreen(screen);

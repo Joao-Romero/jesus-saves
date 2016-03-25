@@ -14,7 +14,7 @@ public class Constants {
     public static final int VIEWPORT_WIDTH = 20;
     public static final int VIEWPORT_HEIGHT = 13;
 
-    public static final Vector2 WORLD_GRAVITY = new Vector2(0, -9.8f);
+    public static final Vector2 WORLD_GRAVITY = new Vector2(0, 0);
 
     public static final float GROUND_X = 0;
     public static final float GROUND_Y = 0;

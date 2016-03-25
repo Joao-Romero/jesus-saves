@@ -12,7 +12,6 @@ public class BodyUtils {
 
     public static boolean bodyIsRunner(Body body) {
         UserData userData = (UserData) body.getUserData();
-
         return userData != null && userData.getUserDataType() == UserDataType.RUNNER;
     }
 
@@ -24,17 +23,16 @@ public class BodyUtils {
         return array;
     }
 
-
+    /*
     public static boolean bodyIsGround(Body body) {
         UserData userData = (UserData) body.getUserData();
-
         return userData != null && userData.getUserDataType() == UserDataType.GROUND;
     }
 
     public static boolean bodyIsWall(Body body) {
         UserData userData = (UserData) body.getUserData();
-
         return userData != null && userData.getUserDataType() == UserDataType.WALL;
     }
+    */
 
 }

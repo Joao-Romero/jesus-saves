@@ -3,8 +3,14 @@ package org.academiadecodigo.hackathon.runner_bros.gameobjects;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.*;
+import org.academiadecodigo.hackathon.runner_bros.box2d.UserData;
+import org.academiadecodigo.hackathon.runner_bros.box2d.UserDataType;
 import org.academiadecodigo.hackathon.runner_bros.manager.AssetManager;
+import org.academiadecodigo.hackathon.runner_bros.utils.Constants;
+
+import java.util.HashMap;
 
 /**
  * Created by cadet on 30/10/15.
@@ -16,25 +22,49 @@ public class Runner extends GameActor {
     private boolean nextToRunner;
     private boolean nextToWall;
 
+    private RunnerState runnerState;
 
-    private Animation animation;
+    private HashMap<RunnerState,Animation> animation;
     private Sprite sprite;
 
     private RunnerType type;
 
-    public Runner(Body body,RunnerType runnerType) {
-        super(body);
+    public Runner(World world,RunnerType runnerType) {
+        super();
+        float x = 10f;
+        float y = 2f;
+        float width = 3.5f;
+        float height = 3.5f;
+
+        runnerState = RunnerState.STOPPED;
+
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        bodyDef.position.set(new Vector2(x, y));
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(.7f, 1.5f, new Vector2(3.1f, 3.5f), 0);
+        Body body = world.createBody(bodyDef);
+
+        body.setGravityScale(Constants.RUNNER_GRAVITY_SCALE);
+        Fixture fixture =  body.createFixture(shape, Constants.RUNNER_DENSITY);
+        body.setFixedRotation(true);
+        fixture.setFriction(2f);
+
+        body.resetMassData();
+        body.setUserData(new UserData(UserDataType.RUNNER));
+        shape.dispose();
+
+        body.setBullet(true);
+        setBody(body);
+
         this.type = runnerType;
         this.sprite = new Sprite(AssetManager.instance.regions.get(runnerType));
-        this.sprite.setSize(1,1);
-        this.sprite.setPosition(getBody().getPosition().x + 1.6f, getBody().getPosition().y + 1.6f);
+        this.sprite.setSize(width,height);
+        this.sprite.setPosition(body.getPosition().x + 1.6f, body.getPosition().y + 1.6f);
         this.animation = AssetManager.instance.animations.get(runnerType);
 
     }
 
-    public Animation getAnimation() {
-        return animation;
-    }
 
     public void setNextToRunner(boolean nextToRunner) {
         this.nextToRunner = nextToRunner;
@@ -70,12 +100,21 @@ public class Runner extends GameActor {
 
 
     public Sprite getSpriteFrame(float stateTime,boolean looping){
-        TextureRegion currentFrame = animation.getKeyFrame(stateTime, looping);
+        TextureRegion currentFrame = animation.get(runnerState).getKeyFrame(stateTime, looping);
+
+        /*
+        if(currentFrame == null){
+            currentFrame = animation.get(runnerState).getKeyFrames()[0];
+        }
+        */
         sprite.setRegion(currentFrame);
         sprite.setPosition(getBody().getPosition().x + 1.6f, getBody().getPosition().y + 1.6f);
         return sprite;
     }
 
+    public void setRunnerState(RunnerState runnerState) {
+        this.runnerState = runnerState;
+    }
 
     public void landed() {
         System.out.println("landed");

@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="600" height="13" tilewidth="32" tileheight="32" nextobjectid="44">
- <tileset firstgid="1" name="nuvensdodiogo" tilewidth="32" tileheight="32" tilecount="208">
+ <tileset firstgid="1" username="nuvensdodiogo" tilewidth="32" tileheight="32" tilecount="208">
   <image source="nuvensdodiogo.png" width="512" height="416"/>
  </tileset>
- <tileset firstgid="209" name="7086" tilewidth="32" tileheight="32" tilecount="2346">
+ <tileset firstgid="209" username="7086" tilewidth="32" tileheight="32" tilecount="2346">
   <image source="7086.png" width="1497" height="1663"/>
  </tileset>
- <layer name="Background Tiles" width="600" height="13">
+ <layer username="Background Tiles" width="600" height="13">
   <data encoding="base64" compression="zlib">
    eJztwQEBAAAAgiD/r25IQAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHwZeeAAAQ==
   </data>
  </layer>
- <layer name="Other Tiles" width="600" height="13">
+ <layer username="Other Tiles" width="600" height="13">
   <data encoding="base64" compression="zlib">
    eJzt1kVzFVEYBuETPLi7u0Nwd3d3d3d3d3d3t+BuP40+lSpqUkAgBHa9eOpd3Ok7s/xSQgi5kBt5kBf5kB8FkIqCKITCKIKiKIbiSLG3t7e3t7e3t//etyUuwZZEKZRGGZRFOZRHBVREJVRGFVRFNVQP9vb29vb29vb2yT7eVzXYmqiF2qiDuqiH+miAhmiExmiCpmiG5sHe3t7e3t7e3j7Zx/sqjW2BlmiF1mgTf0M7tEcHdEQndEYXdEW3YG9vb29vb29vn+zjfdWd7YGe6IXe6IO+6If+GICBGITBGIKhGBbs7e3t7e3t7e2TfbyvhrMjMBKjMBpjMBbjMB4TMBGTMBlTMBXTgr29vb29vb29fbKP99V0dgZmYhZmYw7mYh7mYwEWYhEWYwmWYlmwt7e3t7e3t7dP9vG+Ws6uwEqswmqswVqsw3pswEZswmZswVZsC/b29vb29vb29sk+3lfb2R3YiV3YjT3Yi33YjwM4iEM4jCM4imPB3t7e3t7e3t4+2cf76jh7AidxCqdxBmdxDudxARdxCZdxBVdxLWTdp6X+2JdI/fM++f74X9l9f06/397e3t7e3t4+u328r66zN3ATt3Abd3AX93AfD/AQj/A4ZNw66ezTkHUfn/tZ/yRk7uNzv3t/fOZXfXa/397e3t7e3t7+f/XxvnrGPscLvMQrvMYbvMU7vMcHfMSnkHHrfGG/hr/rP4fMffy/nPQ5fb+9vb29vb29/b/q432Vnl+SJEn/0jcOJT5c
   </data>
  </layer>
- <objectgroup name="Ground">
+ <objectgroup username="Ground">
   <object id="1" x="0" y="383.296" width="19199.1" height="32"/>
  </objectgroup>
- <objectgroup name="Walls">
+ <objectgroup username="Walls">
   <object id="36" x="414.665" y="319.577" width="32" height="64.3498"/>
   <object id="38" x="734.907" y="287.402" width="32" height="64.3498"/>
   <object id="39" x="1053.5" y="318.771" width="32" height="64.3498"/>
   <object id="40" x="1344.65" y="287.402" width="32" height="64.3498"/>
   <object id="43" x="19166.4" y="0.980296" width="32" height="382.141"/>
  </objectgroup>
- <objectgroup name="Powerup">
+ <objectgroup username="Powerup">
   <object id="41" x="895.01" y="287.227" width="32" height="32"/>
  </objectgroup>
 </map>

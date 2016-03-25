@@ -1,6 +1,5 @@
 package org.academiadecodigo.hackathon.runner_bros.screens;
 
-//import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -25,17 +24,13 @@ import java.util.ArrayList;
 public class MenuScreen implements Screen {
 
     private Stage stage;
-    //private Skin skin;
-    //private Game game;
     private VerticalGroup verticalGroup;
     private CheckBoxListener checkBoxListener;
 
-    private static ArrayList<CheckBox> checked = new ArrayList(4);
+    private Label pressQ;
+    private Label pressK;
 
-    /*public MenuScreen(Game game) {
-        super();
-        this.game = game;
-    }*/
+    private static ArrayList<CheckBox> checked = new ArrayList(4);
 
     @Override
     public void show(){
@@ -46,11 +41,15 @@ public class MenuScreen implements Screen {
 
         Image logo = AssetManager.instance.menuImage;
         logo.setPosition((Constants.APP_WIDTH - logo.getWidth()) / 2, (Constants.APP_HEIGHT - logo.getHeight()) / 2);
+
         stage.addActor(logo);
 
         verticalGroup = new VerticalGroup();
         verticalGroup.align(Align.left);
         checkBoxListener = new CheckBoxListener();
+        pressQ = new Label("<Press Q to add player>",skin);
+        pressK = new Label("<Press K to add player>",skin);
+
         CheckBox checkBox;
         for(RunnerType runnerType:RunnerType.values()){
             checkBox = new CheckBox(" "+runnerType,skin);
@@ -62,7 +61,10 @@ public class MenuScreen implements Screen {
 
             verticalGroup.addActor(checkBox);
         }
-        verticalGroup.setPosition(100,200);
+
+        //verticalGroup.addActor(pressQ);
+        //verticalGroup.addActor(pressK);
+        verticalGroup.setPosition(400,250);
         stage.addActor(verticalGroup);
 
 
@@ -80,15 +82,25 @@ public class MenuScreen implements Screen {
         int numberChecked = 0;
         CheckBox tempCheckBox;
         for(Actor actor:verticalGroup.getChildren()){
-            tempCheckBox = (CheckBox) actor;
-            if(tempCheckBox == null){
+            if(!(actor instanceof CheckBox)){
                 continue;
             }
+            tempCheckBox = (CheckBox) actor;
+
             numberChecked += tempCheckBox.isChecked()? 1:0;
         }
 
-        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && numberChecked == 2) {
-            Main.gameManager.setRunners(RunnerType.getByName(checked.get(0).getName()),RunnerType.getByName(checked.get(1).getName()));
+        if(Gdx.input.isKeyJustPressed(Input.Keys.Q)){
+            pressQ.remove();
+        }
+
+        if(Gdx.input.isKeyJustPressed(Input.Keys.K)){
+            pressK.remove();
+        }
+
+        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && checked.size() == 2) {
+            Main.gameManager.setRunnerType(RunnerType.getByName(checked.get(0).getName()));
+            Main.gameManager.setRunnerType2(RunnerType.getByName(checked.get(1).getName()));
             Main.gameManager.setScreen(Main.gameScreen);
             Gdx.input.setInputProcessor(Main.gameScreen.getStage());
         }
@@ -133,6 +145,10 @@ public class MenuScreen implements Screen {
         public void updateChecked(){
             CheckBox tempCheckBox;
             for(Actor actor:verticalGroup.getChildren()){
+
+                if(!(actor instanceof CheckBox)){
+                   continue;
+                }
                 tempCheckBox = (CheckBox) actor;
                 if(tempCheckBox.isChecked() && !checked.contains(tempCheckBox)) {
                     checked.add(tempCheckBox);
@@ -152,10 +168,11 @@ public class MenuScreen implements Screen {
             CheckBox tempCheckBox;
             int numberChecked = 0;
             for(Actor actor:verticalGroup.getChildren()){
-                tempCheckBox = (CheckBox) actor;
-                if(tempCheckBox == null){
+                if(!(actor instanceof CheckBox)){
                     continue;
                 }
+                tempCheckBox = (CheckBox) actor;
+
                 numberChecked += tempCheckBox.isChecked()? 1:0;
             }
 

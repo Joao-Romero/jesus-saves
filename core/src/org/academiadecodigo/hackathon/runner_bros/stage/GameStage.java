@@ -5,11 +5,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -19,11 +14,11 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import org.academiadecodigo.hackathon.runner_bros.Main;
 import org.academiadecodigo.hackathon.runner_bros.box2d.UserData;
 import org.academiadecodigo.hackathon.runner_bros.box2d.UserDataType;
-import org.academiadecodigo.hackathon.runner_bros.gameobjects.*;
+import org.academiadecodigo.hackathon.runner_bros.gameobjects.Runner;
+import org.academiadecodigo.hackathon.runner_bros.gameobjects.RunnerState;
 import org.academiadecodigo.hackathon.runner_bros.manager.AudioManager;
 import org.academiadecodigo.hackathon.runner_bros.utils.BodyUtils;
 import org.academiadecodigo.hackathon.runner_bros.utils.Constants;
-import org.academiadecodigo.hackathon.runner_bros.utils.WorldUtils;
 
 
 /**
@@ -35,7 +30,6 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
     private float stateTime;
 
     private World world;
-    //private Ground ground;
     private Runner runner;
     private Runner runner2;
 
@@ -44,16 +38,14 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
     private float accumulator = 0f;
 
     private OrthographicCamera camera;
-    //private Box2DDebugRenderer renderer;
+    private Box2DDebugRenderer renderer = new Box2DDebugRenderer();
 
     private Rectangle screenRightSide;
     private Rectangle screenLeftSide;
 
     private Vector3 touchPoint;
 
-    private OrthogonalTiledMapRenderer mapRenderer;
-
-    public GameStage(){
+    public GameStage() {
         spriteBatch = new SpriteBatch();
         setUpWorld();
         setupCamera();
@@ -62,72 +54,16 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
 
 
     private void setUpWorld() {
-        world = WorldUtils.createWorld();
+        world = new World(Constants.WORLD_GRAVITY, true);
+
         // Let the world now you are handling contacts
         world.setContactListener(this);
-        loadMap(1);
         setUpRunner();
     }
 
-    private void loadMap(int number) {
-        TmxMapLoader mapLoader = new TmxMapLoader();
-        TiledMap map = mapLoader.load("images/Map" + number + ".tmx");
-        mapRenderer = new OrthogonalTiledMapRenderer(map, 1/32f);
-        System.out.println("Load map");
-
-
-        for(MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)) {
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-
-            Ground ground = new Ground(WorldUtils.createGround(world, (rect.getX() + rect.getWidth() / 2) / 32,
-                    (rect.getY() + rect.getHeight() / 2) / 32,
-                    rect.getWidth() / 32,
-                    rect.getHeight() / 32, 0));
-
-            addActor(ground);
-        }
-
-        for(MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-
-            Wall wall = new Wall(WorldUtils.createWall(world, (rect.getX() + rect.getWidth() / 2) / 32,
-                    (rect.getY() + rect.getHeight() / 2) / 32,
-                    rect.getWidth() / 32,
-                    rect.getHeight() / 32));
-
-            addActor(wall);
-        }
-
-        for(MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)) {
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-
-            PowerUp powerUp = new PowerUp(WorldUtils.createPowerUp(world, (rect.getX() + rect.getWidth() / 2) / 32,
-                    (rect.getY() + rect.getHeight() / 2) / 32,
-                    rect.getWidth() / 32,
-                    rect.getHeight() / 32, 0));
-
-            addActor(powerUp);
-        }
-
-
-        for(MapObject object : map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)) {
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-
-            FinishLine finishLine = new FinishLine(WorldUtils.createFinishLine(world, (rect.getX() + rect.getWidth() / 2) / 32,
-                    (rect.getY() + rect.getHeight() / 2) / 32,
-                    rect.getWidth() / 32,
-                    rect.getHeight() / 32, 0));
-
-            addActor(finishLine);
-        }
-
-
-
-    }
-
     private void setUpRunner() {
-        runner = new Runner(WorldUtils.createRunner(world,10f,2f,1f,1f),Main.gameManager.getRunnerType());
-        runner2 = new Runner(WorldUtils.createRunner(world, 10f, 2f, 1f, 1f),Main.gameManager.getRunner2Type());
+        runner = new Runner(world, Main.gameManager.getRunnerType());
+        runner2 = new Runner(world, Main.gameManager.getRunnerType2());
         addActor(runner);
         addActor(runner2);
     }
@@ -162,91 +98,66 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
         //TODO: Implement interpolation
     }
 
-    private Runner getFrontRunner(){
-
-        Runner result = null;
-
-        for(Actor actor:getActors()){
-            if(!(actor instanceof Runner)){
-                continue;
-            }
-            result = (result == null || ((Runner)actor).getBodyPositionX() > ((Runner)result).getBodyPositionX()) ? (Runner) actor : result;
-        }
-        return result;
-    }
 
     @Override
     public void draw() {
         super.draw();
 
-        Runner frontRunner = getFrontRunner();
-
-        camera.position.set(frontRunner.getBodyPositionX() + 3, 6.5f, 0f);
-        camera.update();
-
-        for(Actor actor:getActors()){
-            if(!(actor instanceof Runner)){
-                continue;
-            }
-
-            Runner runner = (Runner) actor;
-            if(runner.getBody().getLinearVelocity().x < Constants.RUNNER_MAX_VELOCITY && !runner.isNextToWall()){
-                runner.getBody().applyLinearImpulse(Constants.RUNNER_RUNNING_LINEAR_IMPULSE_RIGHT, runner.getBody().getWorldCenter(), true);
-            }
-
-            if(runner.needsVerticalImpulse()){
-                runner.getBody().applyLinearImpulse(Constants.RUNNER_JUMPING_LINEAR_IMPULSE, runner.getBody().getWorldCenter(), true);
-                runner.setNeedsVerticalImpulse(false);
-            }
-
-
-        }
-
-        mapRenderer.setView(camera);
-        mapRenderer.render();
-        //renderer.render(world, camera.combined);
+        renderer.render(world, camera.combined);
 
         spriteBatch.setProjectionMatrix(camera.combined);
         spriteBatch.begin();
-        stateTime+=Gdx.graphics.getDeltaTime();
+        stateTime += Gdx.graphics.getDeltaTime();
 
-        (runner.getSpriteFrame(stateTime,true)).draw(spriteBatch);
-        (runner2.getSpriteFrame(stateTime,true)).draw(spriteBatch);
-
+        (runner.getSpriteFrame(stateTime, true)).draw(spriteBatch);
+        (runner2.getSpriteFrame(stateTime, true)).draw(spriteBatch);
         spriteBatch.end();
     }
 
     @Override
-    public boolean keyDown(int key){
+    public boolean keyDown(int key) {
+        float impulseX = 0f;
+        float impulseY = 0f;
 
-        switch (key)
-        {
+        Runner currentRunner = null;
 
-            case Input.Keys.SPACE:
-                if(runner.canJump()){
-                    System.out.println("runner2 jumped");
-                    runner.jump();
-                }
+        switch (key) {
+            case Input.Keys.A:
+                currentRunner = runner;
+                impulseX = -2f;
                 break;
-            case Input.Keys.ENTER:
-                if(runner2.canJump()){
-                    System.out.println("runner jumped");
-                    runner2.jump();
-                }
+            case Input.Keys.D:
+                currentRunner = runner;
+                impulseX = 2f;
+                break;
+            case Input.Keys.LEFT:
+                currentRunner = runner2;
+                impulseX = -2f;
+                break;
+            case Input.Keys.RIGHT:
+                currentRunner = runner2;
+                impulseX = 2f;
                 break;
             default:
+                currentRunner = runner;
                 break;
 
         }
+
+        currentRunner.getBody().applyLinearImpulse(new Vector2(impulseX,impulseY),currentRunner.getBody().getWorldCenter(),true);
         return true;
     }
 
     @Override
-    public boolean keyUp(int key){
-
+    public boolean keyUp(int key) {
+        switch (key){
+            case Input.Keys.D:
+            case Input.Keys.A:
+                runner.setRunnerState(RunnerState.STOPPED);
+                break;
+        }
         return true;
     }
-
 
 
     @Override
@@ -254,14 +165,6 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
 
         // Need to get the actual coordinates
         translateScreenToWorldCoordinates(x, y);
-
-        /*if (rightSideTouched(touchPoint.x, touchPoint.y)) {
-            //runner2.jump();
-        }
-
-        if (leftSideTouched(touchPoint.x, touchPoint.y)){
-            //runner.runLeft();
-        }*/
 
         return super.touchDown(x, y, pointer, button);
     }
@@ -271,83 +174,23 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
         return super.touchUp(screenX, screenY, pointer, button);
     }
 
-
-    private boolean rightSideTouched(float x, float y) {
-        return screenRightSide.contains(x, y);
-    }
-
-    private boolean leftSideTouched(float x, float y) {
-        return screenLeftSide.contains(x, y);
-    }
-
     private void translateScreenToWorldCoordinates(int x, int y) {
         getCamera().unproject(touchPoint.set(x, y, 0));
     }
 
-
     @Override
     public void beginContact(Contact contact) {
-        Body a = contact.getFixtureA().getBody();
-        Body b = contact.getFixtureB().getBody();
-
-        Body[] orderedBody = BodyUtils.order(a, b);
-
-        Runner runner = getRunnerFromBody(orderedBody[0]);
-        UserDataType userDataType = ((UserData)orderedBody[1].getUserData()).getUserDataType();
-
-
-        if(runner == null){
-            return;
-        }
-
-        switch (userDataType){
-            case GROUND:
-                runner.landed();
-                System.out.println("Hit ground");
-                break;
-            case WALL:
-                runner.setNextToWall(true);
-                System.out.println("Hit wall");
-                break;
-            case RUNNER:
-                runner.setNextToRunner(true);
-                Runner runner2 = getRunnerFromBody(orderedBody[1]);
-                runner2.setNextToRunner(true);
-                break;
-            case POWERUP:
-                System.out.println("powered");
-                getFrontRunner().getBody().applyLinearImpulse(new Vector2(-2.5f, 0f), runner.getBody().getWorldCenter(), true);
-                getOtherRunner(getFrontRunner()).getBody().applyLinearImpulse(new Vector2(1f, 1f), runner.getBody().getWorldCenter(), true);
-                Main.audioManager.playSound(AudioManager.powerUp);
-                break;
-            case FINISHLINE:
-                Main.gameManager.setWinner(runner);
-                System.out.println("finished");
-                break;
-            default:
-                break;
-        }
-
 
     }
 
-    private Runner getOtherRunner(Runner runner){
-        for(Actor actor:getActors()){
-            if((actor instanceof Runner) && !actor.equals(runner)){
-                return (Runner) actor;
-            }
-        }
-        return null;
-    }
-
-    public Runner getRunnerFromBody(Body body){
-        for(Actor actor:getActors()){
-            if(!(actor instanceof Runner)){
+    public Runner getRunnerFromBody(Body body) {
+        for (Actor actor : getActors()) {
+            if (!(actor instanceof Runner)) {
                 continue;
             }
 
             Runner runner = (Runner) actor;
-            if(runner.getBody() == body){
+            if (runner.getBody() == body) {
                 return runner;
             }
         }
@@ -362,12 +205,12 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
 
         Body[] orderedBody = BodyUtils.order(a, b);
         Runner runner = getRunnerFromBody(orderedBody[0]);
-        UserDataType userDataType = ((UserData)orderedBody[1].getUserData()).getUserDataType();
-        if(runner == null){
+        UserDataType userDataType = ((UserData) orderedBody[1].getUserData()).getUserDataType();
+        if (runner == null) {
             return;
         }
 
-        switch (userDataType){
+        switch (userDataType) {
             case GROUND:
                 //System.out.println(runner +" un landed");
                 break;

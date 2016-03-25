@@ -29,17 +29,8 @@ public class GameOverScreen implements Screen {
     public void show() {
         Main.audioManager.playMusic(AudioManager.gameOverMusic);
         switch (Main.gameManager.getWinner().getType()){
-            case sonic:
+            case CHAMBEL:
                 image = AssetManager.instance.sonicWinner;
-                break;
-            case crash:
-                image = AssetManager.instance.crashWinner;
-                break;
-            case mario:
-                image = AssetManager.instance.marioWinner;
-                break;
-            case pikachu:
-                image = AssetManager.instance.pikachuWinner;
                 break;
             default:
                 break;

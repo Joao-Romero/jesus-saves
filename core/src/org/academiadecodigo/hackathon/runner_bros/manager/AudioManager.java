@@ -13,7 +13,7 @@ public class AudioManager {
     public static Music gameOverMusic;
     private Music[] musics;
     public static Sound powerUp;
-    public final boolean ON = false;
+    public final boolean ON = true;
 
     public void init() {
         //load sounds

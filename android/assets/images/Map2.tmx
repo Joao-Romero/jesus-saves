@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="600" height="13" tilewidth="32" tileheight="32" nextobjectid="15">
- <tileset firstgid="1" name="nuvensdodiogo" tilewidth="32" tileheight="32" tilecount="208">
+ <tileset firstgid="1" username="nuvensdodiogo" tilewidth="32" tileheight="32" tilecount="208">
   <image source="nuvensdodiogo.png" width="512" height="416"/>
  </tileset>
- <tileset firstgid="209" name="7086" tilewidth="32" tileheight="32" tilecount="2346">
+ <tileset firstgid="209" username="7086" tilewidth="32" tileheight="32" tilecount="2346">
   <image source="7086.png" width="1497" height="1663"/>
  </tileset>
- <layer name="Tile Layer 1" width="600" height="13">
+ <layer username="Tile Layer 1" width="600" height="13">
   <data encoding="base64" compression="zlib">
    eJztwQEBAAAAgiD/r25IQAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHwZeeAAAQ==
   </data>
  </layer>
- <layer name="Tile Layer 2" width="600" height="13">
+ <layer username="Tile Layer 2" width="600" height="13">
   <data encoding="base64" compression="zlib">
    eJzt1sNzXmEcR/GbKrWN1LaZ1LZt27Zt225T2zb+pJ6Zd5HpPItm9aaLs/gsz3x/91ndhCiKMiEzsiArsiER2ZEDOZELuZEHeZEP+ZFgb29vb29vb2//V18ABVEIhVEERVEMxVECJVEKpVEGSSiLcvb29vb29vb29kFfHhVQEZVQGVVQFdVQHTVQE7VQG3VQF/Xs7e3t7e3t7e2Dvj4aoCEaoTGaoCmaoTlaoCVaIRkpaI029vb29vb29vb2Qd8W7dAeHdARndAZXdAV3dAdPdATvdAbfezt7e3t7e3t7YO+L/qhPwZgIAZhMIZgKIZhOEZgJEZhNMbY29vb29vb29sH/ViMw3hMwERMwmRMwVRMw3TMwEzMwmzMsbe3t7e3t7e3D/q5mIf5WICFWITFWIKlWIblWIGVWIXVWGNvb29vb29vbx/0a7EO67EBG7EJm7EFW7EN27EDO7ELu7HH3t7e3t7e3t4+6PdiH/bjAA7iEA7jCI7iGI7jBE7iFE7jjL29vb29vb29fdCfxTmcxwVcxCVcxhVcxTVcxw3cRCpu4ba9vb29vb29vX3Qpyb+355w49M43Xk/g97jbhx2n7HxHC/wEq/wGnei2P69KPb9D/AQj/A4Snt/e3t7e3t7+/T3Gf3/9C9fuPFrnO58z84HfMQnfI7S9r/hO37gJ37hN97gLd5F9vb29vb29vax/g/p9Wir
   </data>
  </layer>
- <objectgroup name="Ground">
+ <objectgroup username="Ground">
   <object id="1" x="3" y="353" width="1271" height="62"/>
   <object id="2" x="1346" y="355" width="791" height="59"/>
   <object id="3" x="2174" y="343" width="506" height="48"/>

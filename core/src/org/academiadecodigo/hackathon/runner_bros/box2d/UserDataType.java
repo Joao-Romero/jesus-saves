@@ -9,5 +9,4 @@ public enum UserDataType {
     WALL,
     POWERUP,
     FINISHLINE;
-
 }
