@@ -1,5 +1,6 @@
 package org.academiadecodigo.hackathon.runner_bros.gameobjects;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -24,9 +25,31 @@ public class Runner extends GameActor {
     private boolean nextToRunner;
     private boolean nextToWall;
 
+    /*
+    private Texture redBar;
+    private Texture greenBar;
+    */
+
+    private final static int ATTACKS_TILL_FINAL = 2;
+    private int attactSinceFinal;
+
     private float life = 100f;
 
+    public float barWidth(){
+        return life * 340 / 100;
+    }
+
     private RunnerState runnerState;
+
+    /*
+    public void setGreenBar(Texture greenBar) {
+        this.greenBar = greenBar;
+    }
+
+    public void setRedBar(Texture redBar) {
+        this.redBar = redBar;
+    }
+    */
 
     private HashMap<RunnerState,Animation> animation;
     private Sprite sprite;
@@ -51,8 +74,9 @@ public class Runner extends GameActor {
 
         body.setGravityScale(Constants.RUNNER_GRAVITY_SCALE);
         Fixture fixture =  body.createFixture(shape, Constants.RUNNER_DENSITY);
+        fixture.setFriction(1.f);
         body.setFixedRotation(true);
-        fixture.setFriction(2f);
+        fixture.setFriction(5f);
 
         body.resetMassData();
         body.setUserData(new UserData(UserDataType.RUNNER));
@@ -73,7 +97,6 @@ public class Runner extends GameActor {
     public void setNextToRunner(boolean nextToRunner) {
         this.nextToRunner = nextToRunner;
     }
-
 
     public boolean needsVerticalImpulse() {
         return needsVerticalImpulse;
@@ -106,6 +129,34 @@ public class Runner extends GameActor {
         return runnerState;
     }
 
+    public void changeLifeBy(RunnerState opponentState, float damage){
+
+        if(opponentState.equals(RunnerState.FINAL)){
+            damage *= 3;
+            System.out.println("change damage: " + damage);
+        }
+
+        if (runnerState.equals(RunnerState.DEFENSE)){
+            damage /= 2;
+        }
+
+        life = Math.max(life - damage,0);
+        //greenBar =
+    }
+
+    public void inflictDamageTo(Runner runner, float damage){
+        attactSinceFinal++;
+        System.out.println("inflic damage: " + damage);
+        runner.changeLifeBy(getRunnerState(),damage);
+    }
+
+    public float getLife() {
+        return life;
+    }
+
+    public boolean isDead(){
+        return life == 0;
+    }
 
     public void changeBox(float value){
         Shape shape = body.getFixtureList().get(0).getShape();
@@ -132,7 +183,6 @@ public class Runner extends GameActor {
     }
 
     public void setRunnerState(RunnerState runnerState) {
-        this.runnerState = runnerState;
 
         switch (runnerState){
             case PUNCH:
@@ -141,6 +191,18 @@ public class Runner extends GameActor {
             case KICK:
                 AudioManager.instance.playSound(SOUND.KICK);
                 break;
+            case FINAL:
+                break;
+        }
+
+        if(runnerState == RunnerState.FINAL && attactSinceFinal < ATTACKS_TILL_FINAL){
+            return;
+        }
+
+        this.runnerState = runnerState;
+
+        if(runnerState == RunnerState.FINAL){
+            attactSinceFinal = 0;
         }
     }
 
@@ -148,7 +210,6 @@ public class Runner extends GameActor {
         System.out.println("landed");
         jumping = false;
     }
-
 
     public float getBodyPositionX(){
         return body.getPosition().x;
@@ -162,8 +223,6 @@ public class Runner extends GameActor {
     public Body getBody(){
         return super.body;
     }
-
-
 
     public void jump() {
         needsVerticalImpulse = true;

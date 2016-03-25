@@ -18,6 +18,7 @@ import org.academiadecodigo.hackathon.runner_bros.gameobjects.Runner;
 import org.academiadecodigo.hackathon.runner_bros.gameobjects.RunnerState;
 import org.academiadecodigo.hackathon.runner_bros.gameobjects.RunnerType;
 import org.academiadecodigo.hackathon.runner_bros.manager.AudioManager;
+import org.academiadecodigo.hackathon.runner_bros.screens.GameScreen;
 import org.academiadecodigo.hackathon.runner_bros.utils.BodyUtils;
 import org.academiadecodigo.hackathon.runner_bros.utils.Constants;
 
@@ -27,12 +28,14 @@ import org.academiadecodigo.hackathon.runner_bros.utils.Constants;
  */
 public class GameStage extends Stage implements ContactListener, InputProcessor {
 
+    public static final int DAMAGE_DEALT = 5;
     private SpriteBatch spriteBatch;
     private float stateTime;
 
     private World world;
     private Runner runner;
     private Runner runner2;
+    private Runner winner;
 
     private RunnerType lastAttackingRunnerType;
 
@@ -40,7 +43,7 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
     private float accumulator = 0f;
 
     private OrthographicCamera camera;
-    private Box2DDebugRenderer renderer = new Box2DDebugRenderer();
+    //private Box2DDebugRenderer renderer = new Box2DDebugRenderer();
 
     private Rectangle screenRightSide;
     private Rectangle screenLeftSide;
@@ -64,8 +67,16 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
     }
 
     private void setUpRunner() {
+
         runner = new Runner(world, Main.gameManager.getRunnerType());
         runner2 = new Runner(world, Main.gameManager.getRunnerType2());
+        /*
+        runner.setGreenBar(GameScreen.g1Bar);
+        runner.setRedBar(GameScreen.r1Bar);
+
+        runner2.setGreenBar(GameScreen.g2Bar);
+        runner2.setRedBar(GameScreen.r2Bar);
+        */
         addActor(runner);
         addActor(runner2);
     }
@@ -105,7 +116,7 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
     public void draw() {
         super.draw();
 
-        renderer.render(world, camera.combined);
+        //renderer.render(world, camera.combined);
 
         spriteBatch.setProjectionMatrix(camera.combined);
         spriteBatch.begin();
@@ -147,6 +158,16 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
                 currentRunner = runner;
                 impulseX = 2f;
                 break;
+            case Input.Keys.E:
+                currentRunner = runner;
+                runnerState = RunnerState.DEFENSE;
+                break;
+            case Input.Keys.X:
+                currentRunner = runner;
+                runnerState = RunnerState.FINAL;
+                currentRunner.inflictDamageTo(runner2,DAMAGE_DEALT);
+                lastAttackingRunnerType = currentRunner.getType();
+                break;
             case Input.Keys.UP:
                 currentRunner = runner2;
                 runnerState = RunnerState.KICK;
@@ -167,12 +188,29 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
                 currentRunner = runner2;
                 impulseX = 2f;
                 break;
+            case Input.Keys.ALT_RIGHT:
+                currentRunner = runner2;
+                runnerState = RunnerState.DEFENSE;
+                break;
+            case Input.Keys.PERIOD:
+                currentRunner = runner2;
+                runnerState = RunnerState.FINAL;
+                currentRunner.inflictDamageTo(runner,DAMAGE_DEALT);
+                lastAttackingRunnerType = currentRunner.getType();
+                break;
             default:
                 currentRunner = runner;
                 runnerState = RunnerState.STOPPED;
                 break;
 
         }
+
+        /*
+        if(runnerState.equals(RunnerState.FINAL)){
+            currentRunner.inflictDamageTo(runner,DAMAGE_DEALT);
+        }
+        */
+
         currentRunner.setRunnerState(runnerState);
         currentRunner.getBody().applyLinearImpulse(new Vector2(impulseX,impulseY),currentRunner.getBody().getWorldCenter(),true);
         return true;
@@ -185,6 +223,8 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
             case Input.Keys.A:
             case Input.Keys.S:
             case Input.Keys.W:
+            case Input.Keys.E:
+            case Input.Keys.X:
                 runner.setRunnerState(RunnerState.STOPPED);
                 runner.changeBox(0f);
                 break;
@@ -192,6 +232,8 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
             case Input.Keys.DOWN:
             case Input.Keys.LEFT:
             case Input.Keys.RIGHT:
+            case Input.Keys.ALT_RIGHT:
+            case Input.Keys.PERIOD:
                 runner2.setRunnerState(RunnerState.STOPPED);
                 runner2.changeBox(0f);
                 break;
@@ -233,8 +275,32 @@ public class GameStage extends Stage implements ContactListener, InputProcessor 
         //System.out.println(runner.getType() + " " + runner.getRunnerState());
         //System.out.println(otherRunner.getType() + " " + otherRunner.getRunnerState());
         //System.out.println(lastAttackingRunnerType);
+        if (runner.getRunnerState().isAttack()){
+            //runner2.changeLifeBy(runner.getRunnerState(), DAMAGE_DEALT);
+            runner.inflictDamageTo(runner2,DAMAGE_DEALT);
+            System.out.println(runner2.getType() + " " + runner2.getLife());
+        }
+
+        if (runner2.getRunnerState().isAttack()){
+            //runner.changeLifeBy(runner2.getRunnerState(), DAMAGE_DEALT);
+            runner2.inflictDamageTo(runner,DAMAGE_DEALT);
+            System.out.println(runner.getType() + " " + runner.getLife());
+        }
+
+        if(runner.isDead()){
+            winner = runner2;
+        }
+
+        if(runner2.isDead()){
+            winner = runner;
+        }
 
 
+
+    }
+
+    public Runner getWinner() {
+        return winner;
     }
 
     public Runner getRunnerFromBody(Body body) {
